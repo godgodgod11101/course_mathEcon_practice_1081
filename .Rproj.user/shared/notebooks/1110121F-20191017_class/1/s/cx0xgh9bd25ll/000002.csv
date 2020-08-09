@@ -1,0 +1,4 @@
+"0","
+listJCopy = listJ.copy()
+listJDictCopy = listJDict.copy()
+"

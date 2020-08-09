@@ -1,0 +1,9 @@
+"0","
+listJ = [1, 2, [3, 4]]    # nested list
+
+
+listJDict = [
+  {'A': 1, 'B': 2}, 
+  {'A': 5, 'B': 8}
+]    # list of dict
+"
