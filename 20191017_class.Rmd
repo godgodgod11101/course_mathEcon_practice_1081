@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(reticulate)
 
 # 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
-use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
+use_python("D:/anaconda3/envs/classEnvironment/python.exe", required = T)
 # 在名為classEnvironment的沙盒下寫python
 use_condaenv("classEnvironment", required = T)
 ```
@@ -336,7 +336,35 @@ m
 
 ```
 
-$$\sum_i \sum_j m_{ij}$$
+## practice3
+
+$$i = 1, \ \sum_{j=1}^3 m_{1j}$$
+```{python}
+
+sum1 = 0
+
+for j in range(len(m[0])): 
+  sum1 += m[0][j]
+
+m[0]
+sum1
+
+```
+
+$$i = 2, \ \sum_{j=1}^3 m_{2j}$$
+```{python}
+
+sum2 = 0
+
+for j in range(len(m[1])): 
+    sum2 += m[1][j]
+
+m[1]
+sum2
+
+```
+
+$$\sum_{i=1}^2 \sum_{j=1}^3 m_{ij}$$
 ```{python}
 
 sumJ = 0
@@ -349,5 +377,100 @@ sumJ
 
 ```
 
+## practice4
+
+```{python}
+
+covM = [
+  [1, 3, 5], 
+  [3, 1, 7], 
+  [5, 7, 1]
+]
+
+```
+
+$$\sum_{i=1}^3 \sum_{j=1}^{j<=i} covM_{ij}$$
+```{python}
+
+sumJ = 0
+
+for i in range(len(covM)): 
+    for j in range(len(covM[i])): 
+        if j <= i: 
+            sumJ += covM[i][j]
+
+covM
+sumJ
+
+```
+
+老師作法（best）
+```{python}
+
+sumT = 0
+
+for i in range(len(covM)): 
+    for j in range(i+1):     # same as range(0, i+1)
+          sumT += covM[i][j]
+
+sumT
+
+```
+
+老師作法
+```{python}
+
+sumT = 0
+
+for i in range(len(covM)): 
+    for j in range(len(covM[j])): 
+        if j > i: 
+            continue
+        else: 
+            sumT += covM[i][j]
+
+sumT
+
+```
+
+## break、continue
+
+break：跳出迴圈
+
+continue：跳下一個
+
+```{python}
+
+covM = [
+  [1, 3, 5], 
+  [3, 1, 7], 
+  [5, 7, 1]
+]
+
+```
+
+加總矩陣內「大於3」的元素
+```{python}
+
+sumD = 0
+
+for i in range(len(covM)): 
+    for j in range(len(covM[i])): 
+        if covM[i][j] <= 3: 
+            continue
+        else: 
+            sumD += covM[i][j]
+
+covM
+sumD
+
+```
+
+i、j其實有被存下來（iterable最後一個值）
+```{python}
+
+i; j
+
+```
 
 
