@@ -8,13 +8,12 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-
 knitr::opts_chunk$set(echo = TRUE)
 
 library(reticulate)
 
 # 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
-use_python("D:/anaconda3/envs/classEnvironment/python.exe", required = T)
+use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
 # 在名為classEnvironment的沙盒下寫python
 use_condaenv("classEnvironment", required = T)
 ```
@@ -326,7 +325,6 @@ dict_example = {
     ]
 }
 
-
 ```
 
 ```{python}
@@ -466,11 +464,168 @@ sumD
 
 ```
 
-i、j其實有被存下來（iterable最後一個值）
+i、j其實有被存下來（iterable最後一個值），小心後面用到同樣的iterator變數名稱！
 ```{python}
 
 i; j
 
 ```
 
+```{python}
+
+sum1 = 0
+
+for i in range(len(covM)):
+    for i in range(len(covM[i])):
+        sum1 += covM[i][i]
+
+print(covM, sum1)    # The answer is wrong! 
+
+```
+
+
+
+# while loop
+
+while <condition>: 
+    body
+
+```{python}
+
+dict_example = {
+    'list': [1, 3, -7, 4, 9, -5, 4], 
+    'dict': {
+      "date": [2001,2002,2003],
+      "amount": [21000,33000,45880]
+    }, 
+    'matrix': [
+      [2,5,4],
+      [2,-1,3]
+    ]
+}
+
+```
+
+```{python}
+
+x = dict_example['list']
+x
+
+```
+
+找出x中的第一個負值
+```{python}
+
+i = 0
+
+while x[i] > 0: 
+    i += 1
+
+x[i]
+
+```
+
+## practice1
+
+$$5!$$
+```{python}
+
+n = 5
+downByOne = n - 1
+
+while downByOne > 0: 
+    n *= downByOne
+    downByOne -= 1
+
+n
+
+```
+
+## practice2
+
+Newton’s method
+
+```{python}
+
+def p(x): 
+    y = x**3 - x**2 -1
+    return y
+# also
+p = lambda x: x**3 - x**2 -1
+
+def dp(x): 
+    y = 3*x**2 - 2*x 
+    return y
+
+x0 = 1
+
+```
+
+```{python}
+
+x1 = x0 - p(x0)/dp(x0)
+x1
+p(x1)
+
+```
+
+```{python}
+
+x2 = x1 - p(x1)/dp(x1)
+x2
+p(x2)
+
+```
+
+```{python}
+del x0, x1, x2
+```
+
+```{python}
+
+x = 1
+n = 0
+
+while abs(p(x)) >= 10**-10 and n <= 20: 
+    x = x - p(x)/dp(x)    # x -= p(x)/dp(x) is better! 
+    n += 1
+
+x
+p(x)
+n
+
+```
+n為計數器。設定計數器，為了防止while loop停不下來。
+
+```{python}
+
+x = 1
+n = 0
+
+while abs(p(x)) >= 10**-10: 
+    x -= p(x)/dp(x)  
+    n += 1
+    if n > 10: 
+        break
+
+x
+p(x)
+n
+
+```
+
+## hw
+
+取出contentList中{r graph}的程式碼。
+```{python}
+
+from requests import get
+
+# to console
+
+# myFile = get('https://raw.githubusercontent.com/tpemartin/course-108-1-inclass-datavisualization/master/作品展示/homework2/homework2_008.RMD')
+
+# contentList = myFile.content.decode("utf-8").split("\n")
+
+```
 

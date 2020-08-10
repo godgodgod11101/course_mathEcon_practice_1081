@@ -1,0 +1,13 @@
+"0","
+def p(x): 
+    y = x**3 - x**2 -1
+    return y
+# also
+p = lambda x: x**3 - x**2 -1
+
+def dp(x): 
+    y = 3*x**2 - 2*x 
+    return y
+
+x0 = 1
+"
