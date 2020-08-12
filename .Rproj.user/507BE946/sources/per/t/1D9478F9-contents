@@ -1,0 +1,155 @@
+---
+title: "Untitled"
+author: "jacky wang"
+date: "2020/8/12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("classEnvironment", required = T)
+```
+
+**技巧**
+
+按小齒輪－＞按chunk output in console：讓console可編譯Python（>>> Python code）。
+  在console打exit，就會回復原狀（> R code）。
+
+在console裡打“repl_python()”，讓console可編譯Python（>>> Python code）。
+
+shift + Tab：回彈兩格。
+
+**連結**
+
+https://opendata.culture.tw/ --> 文化資料開放服務網
+
+
+
+
+# CH5 Rectangular Data
+
+matrix與data frame兩個方形資料並不是Python的基本資料儲存類型，它只是基本類型的擴充。
+
+  matrix：依賴numpy模組，list的延伸
+  data frame：依賴pandas模組，dict的延伸
+
+```{python}
+
+import numpy as np
+
+```
+
+# matrix
+
+## 定義
+
+```{python}
+
+list_matrix1 = [
+  [7, -9, -5, 10, -13], 
+  [12, -6, -3, -6, -14], 
+  [7, -5, -4, 1, 5]
+]
+
+matrix1 = np.array(list_matrix1)
+matrix1
+
+```
+
+## 元素萃取
+
+傳統取法
+```{python}
+
+list_matrix1[1][3]    # row 2, column 4
+matrix1[1][3]
+
+```
+
+矩陣取法
+```{python}
+
+matrix1
+
+matrix1[1, 3]
+matrix1[[0, 2], :]    # row 1 3, all columns
+matrix1[[0, 2], 2:5]    # row 1 and 3, columns 3 4 5 (<start_with>:<end_before>)
+
+```
+
+```{python}
+
+matrix1
+
+matrix1[[True, False, True], :]    # row 1 3 (use boolean), all columns
+# The length of boolean list must equal the number of row/column.
+matrix1[:, [True, True, False, False, False]]
+
+```
+
+```{python}
+
+np.sum(matrix1)    # sum all of the elements of the input array (matrix)
+np.sum(matrix1, axis = 0)    # sum across rows
+np.sum(matrix1, axis = 1)    # sum across columns
+
+```
+
+```{python}
+
+matrix1
+
+np.sum(matrix1, axis = 0) > 0
+matrix1[:, np.sum(matrix1, axis = 0) > 0]    # pick columns which sum across rows > 0
+
+np.sum(matrix1, axis = 1) < 0
+matrix1[np.sum(matrix1, axis = 1) < 0, :]    # pick rows which sum across columns < 0
+
+```
+
+## numpy copy method
+
+```{python}
+
+list_matrix1 = [
+  [7, -9, -5, 10, -13], 
+  [12, -6, -3, -6, -14], 
+  [7, -5, -4, 1, 5]
+]
+
+matrix1 = np.array(list_matrix1)
+
+list_matrix11 = list_matrix1.copy()    # shallow copy
+
+list_matrix11[0][0] = "change"
+list_matrix1    # list_matrix1 has changed! 
+
+```
+
+copy method不再是shallow copy而是deep copy。
+```{python}
+
+matrix11 = matrix1.copy()
+
+matrix11[0, 0] = 199
+
+matrix11
+matrix1    # matrix1 doesn't change. 
+
+```
+
+# data frame
+
+```{python}
+
+import pandas as pd
+
+```
+
+
