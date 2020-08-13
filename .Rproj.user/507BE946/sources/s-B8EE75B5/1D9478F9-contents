@@ -152,4 +152,85 @@ import pandas as pd
 
 ```
 
+## 定義
+
+方法一
+```{python}
+
+dict_grade = {
+    'studentID': [172, 214, 322, 425, 517],
+    'name': ["Min", "Bear", "Tiger", "New", "White"],
+    'grade': [80, 60, 90, 70, 50]
+}
+
+df_grade = pd.DataFrame(dict_grade)
+df_grade
+
+```
+
+原物件class改變（變為DataFrame）
+```{python}
+
+type(dict_grade)
+type(df_grade)
+
+```
+
+原物件內部元素class亦改變（變為Series）
+```{python}
+
+type(dict_grade['name'])
+type(df_grade['name'])
+
+```
+
+方法二
+```{python}
+
+df_grade1 = pd.DataFrame(
+    {
+      'studentID': pd.Series([172, 214, 322, 425, 517]), 
+      'name': pd.Series(["Min", "Bear", "Tiger", "New", "White"]), 
+      'grade': pd.Series([80, 60, 90, 70, 50])
+    }
+)
+
+df_grade1
+
+```
+
+
+
+## 元素萃取
+
+dict為set，沒有index的概念，要用名稱萃取；list才有index的概念。
+data frame亦可用dict的取法。
+```{python}
+
+dict_grade['name'][0]
+df_grade['name'][0]
+
+```
+
+```{python}
+
+df_grade['studentID']
+df_grade.studentID    # R: df_grade$studentID
+
+```
+
+取row：index slicing（不推薦）
+```{python}
+
+df_grade[2:3]
+
+```
+
+取row：list of booleans（list長度要與總row數相同）
+```{python}
+
+df_grade[[True, False, True, False, False]]
+df_grade[df_grade.grade > 70]
+
+```
 
