@@ -203,6 +203,8 @@ df_grade1
 
 ## 元素萃取
 
+### 一維取法
+
 dict為set，沒有index的概念，要用名稱萃取；list才有index的概念。
 data frame亦可用dict的取法。
 ```{python}
@@ -233,4 +235,81 @@ df_grade[[True, False, True, False, False]]
 df_grade[df_grade.grade > 70]
 
 ```
+
+### pandas copy method
+
+```{python}
+
+dict_gradeC = dict_grade.copy()    # shallow copy
+
+dict_gradeC["name"][0] = "Jack"
+dict_grade    # dict_grade has changed! 
+
+```
+
+```{python}
+
+df_gradeC = df_grade.copy()
+
+df_gradeC["name"][0] = "Jack"    # SettingWithCopyWarning: ...
+
+df_grade    # df_grade doesn't change. 
+
+```
+
+### 二維取法
+
+```{python}
+df_grade
+```
+
+.loc[,]是很直覺的取法，照data frame「顯示」的index取（如上）。
+```{python}
+
+df_grade.loc[[0, 2, 4], ["studentID", "name"]]
+df_grade.loc[1:3, :]    # end with! not end before! 
+df_grade.loc[:, 'studentID': "grade"]
+
+```
+
+.iloc[,]較不直覺（全用index）
+```{python}
+
+df_grade.iloc[[0, 2, 4], [0, 2]]
+df_grade.iloc[1:3, :]    # end before! 
+df_grade.iloc[:, [0, 2]]
+
+```
+
+list of boolean
+```{python}
+
+df_grade.loc[:, [True, False, True]]
+df_grade.loc[[True, False, True, False, False], :]
+
+df_grade.iloc[:, [True, False, True]]
+df_grade.iloc[[True, False, True, False, False], :]
+
+```
+
+### index不是row position
+
+新產生的資料，每筆資料的index與原資料相同
+```{python}
+
+df_grade.sample(n = 10, replace = True)
+
+```
+
+可用index追蹤原始資料
+```{python}
+
+df_grade1 = df_grade.loc[[0, 3], ["studentID", "name"]]
+df_grade1
+
+# What's their grades? 
+df_grade.loc[[3, 0], ["grade"]]
+
+```
+
 
