@@ -197,7 +197,7 @@ add_fun(1, 3)
 # for loop
 
 for <iterator> in <iterable>:
-    body
+    <body>
 
 ```{python}
 

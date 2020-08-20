@@ -1,0 +1,4 @@
+"0","
+del area, pi
+del sys.modules[""mymodule""]
+"

@@ -1,0 +1,4 @@
+"0","
+del area
+del sys.modules['mymodule']
+"

@@ -1,0 +1,4 @@
+"0","
+del _pi
+del sys.modules['mymodule']
+"
