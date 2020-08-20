@@ -1,4 +1,4 @@
 "0","
-del _pi
+del _a
 del sys.modules['mymodule']
 "

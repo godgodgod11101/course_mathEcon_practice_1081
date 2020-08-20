@@ -1,4 +1,4 @@
 "0","
-del area
+del pi, area
 del sys.modules['mymodule']
 "

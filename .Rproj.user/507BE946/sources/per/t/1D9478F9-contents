@@ -136,37 +136,38 @@ from mymodule import *
 
 ```
 
-此時沒有引入 _pi
+此時沒有引入 _a
 ```{python}
 
-# _pi    # error! 
+# _a    # error!
+pi
 area(3)    # area() has been imported
 
 ```
 
 ```{python}
 
-del area
+del pi, area
 del sys.modules['mymodule']
 
 ```
 
-硬要引入_pi
+硬要引入_a
 ```{python}
 
-from mymodule import _pi
+from mymodule import _a
 
 ```
 
 ```{python}
 
-_pi
+_a
 
 ```
 
 ```{python}
 
-del _pi
+del _a
 del sys.modules['mymodule']
 
 ```

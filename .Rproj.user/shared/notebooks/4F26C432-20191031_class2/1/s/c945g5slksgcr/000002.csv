@@ -1,5 +1,4 @@
-"2","NameError: name 'mymodule' is not defined
-
-Detailed traceback: 
-  File ""<string>"", line 1, in <module>
+"0","
+del mymodule
+del sys.modules['mymodule']
 "

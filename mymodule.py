@@ -1,9 +1,13 @@
 """mymath - our example math module"""
-_pi = 3.14159
+pi = 3.14159
+_a = 3
+
 def area(r):
     """area(r): return the area of a circle with radius r."""
-    global _pi
-    return(_pi * r * r)
+    global pi
+    return(pi * r * r)
+
+
 
 # single-comment
 """multi-comment"""
