@@ -279,7 +279,7 @@ int_totalPlay = 0
 
 for i in range(len(danceInfo)): 
     int_totalPlay += len(danceInfo[i]['showInfo'])
-    # like int_totalPlay.iadd(len(danceInfo[i]['showInfo']))
+    # like int_totalPlay.Iadd(len(danceInfo[i]['showInfo']))
 
 int_totalPlay
 
