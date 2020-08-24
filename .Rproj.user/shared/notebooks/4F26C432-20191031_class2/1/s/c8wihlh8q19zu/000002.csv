@@ -1,4 +1,0 @@
-"0","
-del _a
-del sys.modules['mymodule']
-"

@@ -114,6 +114,7 @@ from mymodule import pi, area
 
 ```{python}
 
+pi
 area(3)
 
 ```
@@ -171,4 +172,6 @@ del _a
 del sys.modules['mymodule']
 
 ```
+
+
 
