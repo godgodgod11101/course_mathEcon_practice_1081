@@ -1,0 +1,8 @@
+"0","
+danceInfoList = []
+
+for i in range(len(danceInfo)): 
+    for j in range(len(danceInfo[i][""showInfo""])): 
+        danceInfoList.append(danceInfo[i][""showInfo""][j])
+
+# danceInfoList"

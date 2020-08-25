@@ -1,0 +1,3 @@
+"0","import pandas as pd
+df_business=pd.read_csv(""http://data.gcis.nat.gov.tw/od/file?oid=340B4FDD-880E-4287-9289-F32782F792B8"")
+dict_business=df_business.to_dict()"

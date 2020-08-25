@@ -1,0 +1,333 @@
+---
+title: "homework2"
+output: html_document
+params:
+  studentID: "王正評"
+  studentName: "710761105"
+editor_options: 
+  chunk_output_type: inline
+---
+# 注意事項
+
+存檔與填寫注意事項：
+
+假設你叫王小明，學號41078392。
+
+  1. 存檔時，請用你的學號當延伸檔名。學號為41078392，則請存成homeworkX-41078392.Rmd, X為這次作業號碼。(記得使用：save with enconding, 然後選utf-8)
+
+  2. 本文檔開始的Frontmatter中，studentID（即key）其value目前為"你的學號"，以上面學號為例則必需改成"41078392"；而studentName（key）其value目前為"你的名字"，以上面名字為例則必需改成"王小明"
+
+# 題目
+
+請先執以下code chunk開啟RStudio底下的Python環境：
+
+  * 注意`use_python`的路徑及`use_condaenv`的沙盒環境必需改成你電腦的對應設定。
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("classEnvironment", required = T)
+```
+
+## 作答需知
+
+  * 每一題會有設好的ans chunk，請將你的程式寫在裡面，切勿自行加新的python chunk。
+  
+  * 每一題都需要你把答案存在指定的物件，並在「**最後一行**」打物件名稱。以下例，若答案是`2+3`並要你存在答案物件test裡，那你的程式如下：
+```{python}
+test = 2+3 # 答案存在指定test物件
+test # 最後一行打指定物件名稱
+```
+
+  * 以下每個ans chunk的最後一行有#號mark起來是指定答案物件的名字，請將你運算答案存在該物件，並把最後一行的#號拿掉。
+
+## 1 
+
+執行以下程序讀入第一次作業解答內容成為list of strings形式的物件filelines
+
+```{python data1}
+import requests
+response=requests.get("https://www.dropbox.com/s/58e3g2dq8urecw0/hw1-ans.Rmd?dl=1")
+filelines=response.text.split("\n")
+```
+
+你也可以執行以下R指示在獨立視窗看filelines的各行內容。
+```{r}
+View(py$filelines)
+```
+
+### 1.1 語言判斷
+filelines裡每一個code chunk是由以下格式組成：
+<pre>
+```{<語言> ...}
+codes
+```
+</pre>
+
+其中開頭的<code>\`\`\`{<語言> ...}</code>標明了是使用python或R程式語言。寫一個`chunk_lang(chunk_start)`函數：
+
+  * chunk_start: a string. <code>\`\`\`{<語言> ...}</code>內容的文字。
+  
+  * return: a string. 若<語言>為r則回傳'r', 為python則回傳'python'。（本題可假設只有r, python兩種可能） 
+  
+hint: 答案正確的話，執行
+```
+chunk_start=chunk_start_example1="```{python}"
+chunk_start_example2="```{r }"
+chunk_lang(chunk_start_example1)
+chunk_lang(chunk_start_example2)
+```
+會分別得到
+```
+'python'
+'r'
+```
+
+
+```{python ans11}
+
+def chunk_lang(chunk_start): 
+    if chunk_start[:5] == "```{r": 
+        return "r"
+    elif chunk_start[:10] == "```{python": 
+        return "python"
+    else: 
+        return "other code chunk"
+
+chunk_lang
+```
+
+
+### 1.2 code chunks位置
+
+找出filelines中所有以「\`\`\`」開頭的元素位置index，並計錄在index_3ticks這個list答案物件裡。
+
+hint: index_3ticks的前3個值是26，32，39。
+
+
+```{python ans12}
+
+index_3ticks = []
+
+for i in range(len(filelines)): 
+    if filelines[i][:3] == "```": 
+        index_3ticks.append(i)
+
+
+index_3ticks
+```
+
+
+### 1.3 code chunk記錄
+
+產生一個名為dict_chunks的dictionary答案物件, 它有三個keys:
+
+  * 'start': a list. 每個code chunk開始的位置值為其value。
+  
+  * 'end': a list. 每個code chunk結束的位置值為其value。
+  
+  * 'language': a list. 每個code chunk所使用的程式語言。
+
+此題可使用1.1小題的`chunk_lang()`函數。
+
+hint: 答案正確的話，執行:
+```
+dict_chunks['start'][0]
+dict_chunks['end'][0]
+dict_chunks['language'][0]
+```
+會顯示:
+```
+27
+31
+'r'
+```
+
+```{python ans13}
+
+dict_chunks = {
+    "start": [], 
+    "end": [], 
+    "language": []
+}
+
+for i in range(len(filelines)):
+    if chunk_lang(filelines[i]) == "r": 
+        dict_chunks["start"].append(i)
+        dict_chunks["language"].append("r")
+    elif chunk_lang(filelines[i]) == "python": 
+        dict_chunks["start"].append(i)
+        dict_chunks["language"].append("python")
+    elif filelines[i] == "```": 
+        dict_chunks["end"].append(i)
+    else: 
+        continue
+
+dict_chunks['start'][0]
+dict_chunks['end'][0]
+dict_chunks['language'][0]
+```
+
+### 1.4 code extraction
+產生一個list of strings答案物件python_code_list，其內容由hw1-ans.Rmd裡所有python code lines取出形成。
+
+hint: 答案正確的話，執行:
+```
+python_code_list[0]
+python_code_list[1]
+python_code_list[2]
+```
+會顯示:
+```
+'test = 2+3 # 答案存在指定test物件'
+'test # 最後一行打指定物件名稱'
+'import random'
+```
+
+```{python ans14}
+
+list_pickCode = []
+
+for i in range(len(dict_chunks["language"])): 
+    if dict_chunks["language"][i] == "python": 
+        list_pickCode.extend(
+          list(range(dict_chunks["start"][i] + 1, dict_chunks["end"][i]))
+        )
+
+python_code_list = [filelines[list_pickCode[i]] for i in range(len(list_pickCode))]
+
+python_code_list
+```
+
+
+完成python_code_list後，若執行以下程序將得到一個只有python code的hw1-ans.py檔案。
+```{python}
+f2=open("hw1_ans.py","w", encoding="utf-8")
+f2.writelines("\n".join(python_code_list))
+f2.close()
+```
+字元編碼用 “utf-8”
+以 “\n” 將list of string所有元素串接起來，為了換行
+
+## 2
+
+執行以下程序得到台灣2019年不同舞蹈的表演資訊danceInfo：
+```{python data2}
+import requests
+response=requests.get("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=3")
+danceInfo=response.json()
+```
+
+### 2.1
+
+每一個danceInfo記錄皆有一個獨一無二的UID值，請建立一個名為allUIDs的list答案物件，其內容為danceInfo的所有UID值，且danceInfo裡的第i筆dance及UID值會存在allUIDs對應的相同i位置，即第i筆dance的UID會是allUIDs[i]:
+hint: 答案正確的話，執行:
+```
+allUIDs[0]
+allUIDs[1]
+```
+會顯示:
+```
+'5c76c26ed083a35404c3dce7'
+'5c79825ad083a35404c3de58'
+```
+
+```{python ans21}
+# allUIDs
+```
+
+### 2.2
+
+寫一個`search_by_uid(uid)`函數：
+
+  * uid: a string. 表演的uid值
+  
+  * return: a list. 為該表演在danceInfo裡的showInfo訊息。
+
+答案物件為`search_by_uid`沒有小括號。
+
+hint: 答案正確時，打`search_by_uid('5d93a403d083a331549834d6')`會得到：  
+```
+[{'time': '2019/10/19 15:00:00', 'location': '臺東縣綠島鄉將軍岩20號', 'locationName': '綠島人權紀念公園', 'onSales': 'N', 'price': '', 'latitude': '0.0', 'longitude': '0.0', 'endTime': '2019/10/19 17:00:00'}]
+```
+
+```{python ans22}
+# search_by_uid
+```
+
+### 2.3
+
+找出danceInfo裡uid為'5d93a403d083a331549834d6'的資料並在其'showInfo'添加如下的dictionary形式資訊：  
+```
+{'time': '2019/10/30 15:00:00', 'location': '新北市三峽區大學路151號', 'locationName': '國立臺北大學'}
+```
+本題完成後請unmarkd (remove #) 答案區的兩行程式並保持那兩行在最後的位置，用來double check該展演資訊是否有真的有更改。
+
+hint: 若答案正確，`updated_result`內容值為：
+```
+[{'time': '2019/10/19 15:00:00', 'location': '臺東縣綠島鄉將軍岩20號', 'locationName': '綠島人權紀念公園', 'onSales': 'N', 'price': '', 'latitude': '0.0', 'longitude': '0.0', 'endTime': '2019/10/19 17:00:00'}, {'time': '2019/10/30 15:00:00', 'location': '新北市三峽區大學路151號', 'locationName': '國立臺北大學'}]
+```
+
+```{python ans23}
+# updated_result
+```
+
+## 3.
+考慮如下的矩陣M：
+
+$$M=\left[\begin{array}{ccccc}
+7 & -9 & -5 & 10 & -13\\
+12 & -6 & -3 & -6 & -14\\
+7 & -5 & -4 & 1 & 5
+\end{array}\right]$$
+我們可以使用list呈現如下：
+
+```{python data3}
+M=[[7, -9, -5, 10, -13], 
+    [12, -6, -3, -6, -14], 
+    [7, -5, -4, 1, 5]]
+```
+
+### 3.1 
+令$M_{ij}$代表M中第i行（row）第j列（column）的值，請取出$M_{24}$ 存在答案物件M24
+
+```{python ans31}
+# M24
+```
+
+### 3.2
+取出矩陣M的第2,3 row的第3到5 colum的所有值，即：
+$$M_{2:3,3:5}=\left[\begin{array}{ccccc}
+ -3 & -6 & -14\\
+ -4 & 1 & 5
+\end{array}\right]$$
+並將它存在答案物件M_partial
+```{python ans32}
+# M_partial
+```
+
+### 3.3 matrix_get
+請寫一個`matrix_get(matrix, rangeR, rangeC)`函數：
+
+  * matrix: a list. list形式的矩陣
+  
+  * rangeR: 由`range()`產生，構成代表所要取的row index範圍
+  
+  * rangeC: 由`range()`產生，構成代表所要取的col index範圍
+
+  * return: a list. 為對應rangeR,rangeC所取出的子矩陣，以nested list形式呈現矩陣。
+  
+hint: 答案正確的話例如，輸入`matrix_get(M,range(1,3),range(2,5))`會得到：
+```
+[[-3, -6, -14], [-4, 1, 5]]
+```
+即前一小題答案值。
+
+```{python ans33}
+# matrix_get
+```
