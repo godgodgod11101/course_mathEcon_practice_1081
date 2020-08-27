@@ -1,0 +1,10 @@
+"0","
+def matrix_get(matrix, rangeR, rangeC): 
+    m_part = []
+    for i in range(len(rangeR)): 
+        m_part.append(
+          M[rangeR[i]][rangeC[0]: rangeC[-1]+1]
+        )
+    return m_part
+
+# matrix_get"

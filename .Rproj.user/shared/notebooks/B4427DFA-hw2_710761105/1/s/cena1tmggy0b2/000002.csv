@@ -1,3 +1,0 @@
-"0","f2=open(""hw1_ans.py"",""w"", encoding=""utf-8"")
-f2.writelines(""\n"".join(python_code_list))
-f2.close()"
