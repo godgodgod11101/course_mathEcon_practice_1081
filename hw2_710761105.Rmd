@@ -254,9 +254,9 @@ allUIDs
 
 答案物件為`search_by_uid`沒有小括號。
 
-hint: 答案正確時，打`search_by_uid('5d93a403d083a331549834d6')`會得到：  
+hint: 答案正確時，打`search_by_uid('5c9a1560d083a30290d1b36f')`會得到：  
 ```
-[{'time': '2019/10/19 15:00:00', 'location': '臺東縣綠島鄉將軍岩20號', 'locationName': '綠島人權紀念公園', 'onSales': 'N', 'price': '', 'latitude': '0.0', 'longitude': '0.0', 'endTime': '2019/10/19 17:00:00'}]
+[{'time': '2020/07/01 09:00:00', 'location': '268  宜蘭縣五結鄉五濱路二段201號', 'locationName': '宜蘭傳藝園區-展示館', 'onSales': 'N', 'price': '', 'latitude': None, 'longitude': None, 'endTime': '2020/12/15 09:00:00'}]
 ```
 
 ```{python ans22}
@@ -272,9 +272,18 @@ def search_by_uid(uid):
 search_by_uid
 ```
 
+teacher's answer
+```{python}
+
+def search_by_uidT(uid): 
+    index = allUIDs.index(uid)
+    return danceInfo[index]["showInfo"]
+
+```
+
 ### 2.3
 
-找出danceInfo裡uid為'5d93a403d083a331549834d6'的資料並在其'showInfo'添加如下的dictionary形式資訊：  
+找出danceInfo裡uid為'5c9a1560d083a30290d1b36f'的資料並在其'showInfo'添加如下的dictionary形式資訊：  
 ```
 {'time': '2019/10/30 15:00:00', 'location': '新北市三峽區大學路151號', 'locationName': '國立臺北大學'}
 ```
@@ -282,18 +291,30 @@ search_by_uid
 
 hint: 若答案正確，`updated_result`內容值為：
 ```
-[{'time': '2019/10/19 15:00:00', 'location': '臺東縣綠島鄉將軍岩20號', 'locationName': '綠島人權紀念公園', 'onSales': 'N', 'price': '', 'latitude': '0.0', 'longitude': '0.0', 'endTime': '2019/10/19 17:00:00'}, {'time': '2019/10/30 15:00:00', 'location': '新北市三峽區大學路151號', 'locationName': '國立臺北大學'}]
+[{'time': '2020/07/01 09:00:00', 'location': '268  宜蘭縣五結鄉五濱路二段201號', 'locationName': '宜蘭傳藝園區-展示館', 'onSales': 'N', 'price': '', 'latitude': None, 'longitude': None, 'endTime': '2020/12/15 09:00:00'}, {'time': '2019/10/30 15:00:00', 'location': '新北市三峽區大學路151號', 'locationName': '國立臺北大學'}]
 ```
 
 ```{python ans23}
 
-# updated_result = search_by_uid('5d93a403d083a331549834d6').copy()
+# updated_result = search_by_uid('5c9a1560d083a30290d1b36f').copy()    # shallow copy
 # updated_result.append(
 #   {'time': '2019/10/30 15:00:00', 'location': '新北市三峽區大學路151號', 'locationName': '國立臺北大學'}
-# )
+# )    # danceInfo[0]["showInfo"] doesn't change! 
 # 
 # updated_result
 ```
+
+teacher's answer
+```{python}
+
+# search_by_uidT('5c9a1560d083a30290d1b36f').append(
+#   {'time': '2019/10/30 15:00:00', 'location': '新北市三峽區大學路151號', 'locationName': '國立臺北大學'}
+# )
+# 
+# danceInfo[0]["showInfo"]
+
+```
+python可以透過函數直接更改資料（如果return非immutable）
 
 ## 3.
 考慮如下的矩陣M：

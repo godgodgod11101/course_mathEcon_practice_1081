@@ -15,6 +15,7 @@ use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
 # 在名為classEnvironment的沙盒下寫python
 use_condaenv("classEnvironment", required = T)
 ```
+若無法執行set up chunk，按Session－＞按Restart R
 
 **技巧**
 

@@ -1,0 +1,112 @@
+---
+title: "20191114 class"
+author: "jacky wang"
+date: "2020/8/28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("classEnvironment", required = T)
+```
+若無法執行set up chunk，按Session－＞按Restart R
+
+**技巧**
+
+按小齒輪－＞按chunk output in console：讓console可編譯Python（>>> Python code）。
+  在console打exit，就會回復原狀（> R code）。
+
+在console裡打“repl_python()”，讓console可編譯Python（>>> Python code）。
+
+shift + Tab：回彈兩格。
+
+**連結**
+
+https://opendata.culture.tw/ --> 文化資料開放服務網
+
+
+
+
+
+# CH7 Prob & Distr
+
+## sample space
+
+```{python}
+
+omega1 = {
+  ("h", "h"), ("h", "t"), ("t", "h"), ("t", "t") 
+}
+
+print(omega1)
+
+```
+
+set內無法定義mutable的元素
+```{python}
+
+# omega1 = {
+#   ["h", "h"], ["h", "t"], ["t", "h"], ["t", "t"]
+# }
+
+```
+
+比較list和tuple（tuple僅有兩個無法改變資料的method）
+```{python}
+
+["h", "h"].append("a")
+("h", "h").count("h")
+
+```
+
+## event space
+
+The collection of subsets of sample space.
+
+```{python}
+
+omega1
+
+{('t','h')}.issubset(omega1)
+{('t', 'h'), ('h', 'h')}.issubset(omega1)
+set([]).issubset(omega1)    # null set
+omega1.issubset(omega1)    # sample space itself
+
+```
+
+build event set
+```{python}
+
+# eventSp = {
+#   set([]), {('t','h')}, {('t', 'h'), ('h', 'h')}
+# }
+
+```
+set是mutable！但set內無法定義mutable的元素
+
+frozenset: immutable set
+```{python}
+
+eventSp = {
+  frozenset() ,    # empty frozenset object
+  frozenset({('t','h')})
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
