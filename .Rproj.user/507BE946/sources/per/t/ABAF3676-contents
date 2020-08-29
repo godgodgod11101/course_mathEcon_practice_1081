@@ -100,10 +100,37 @@ eventSp = {
 
 ```
 
+```{python}
+import itertools
+```
 
+```{python}
 
+eventSp = set([frozenset(), frozenset(omega1)])
+print(eventSp)
 
+```
 
+```{python}
+
+for numPick in range(1, len(omega1)):    # 1, 2, 3
+    for i in itertools.combinations(omega1, numPick): 
+        eventSp.add(frozenset(i))
+
+eventSp
+len(eventSp)
+
+```
+
+itertools.combinations(iterable, r)：
+  在iterable內一次取r個元素，取出所有可能的結果（不在乎順序），結合成另一iterable物件。
+  （新iterable物件內元素為tuple）
+```{python}
+
+set(itertools.combinations(omega1, 2))
+set(itertools.combinations("ABCD", 1))
+
+```
 
 
 
