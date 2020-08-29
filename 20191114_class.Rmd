@@ -36,7 +36,7 @@ https://opendata.culture.tw/ --> 文化資料開放服務網
 
 # CH7 Prob & Distr
 
-## sample space
+# sample space
 
 ```{python}
 
@@ -65,7 +65,7 @@ set內無法定義mutable的元素
 
 ```
 
-## event space
+# event space
 
 The collection of subsets of sample space.
 
@@ -108,6 +108,7 @@ import itertools
 
 eventSp = set([frozenset(), frozenset(omega1)])
 print(eventSp)
+len(eventSp)
 
 ```
 
@@ -131,6 +132,69 @@ set(itertools.combinations(omega1, 2))
 set(itertools.combinations("ABCD", 1))
 
 ```
+
+## Set is iterable! 
+
+Verify that every event in eventSp is a subset of omega1. 
+```{python}
+
+list_eventSp = list(eventSp)
+list_eventSp.sort()
+list_eventSp
+
+```
+
+```{python}
+
+[list_eventSp[i].issubset(omega1) for i in range(len(list_eventSp))]
+
+```
+
+set is iterable
+```{python}
+
+[event.issubset(omega1) for event in eventSp]
+
+```
+
+## sample's prob
+
+```{python}
+import pandas as pd
+import numpy as np
+```
+
+```{python}
+
+prob = 0.5    # prob. of head
+
+arr_omega1 = np.array(list(omega1))
+arr_omega1
+
+```
+
+```{python}
+
+arr_omega1[:, 0] == "h"
+arr_omega1[:, 1] == "t"
+
+```
+
+計算四種出象之機率（在運算時，True = 1，False = 0）
+```{python}
+
+arr_omega1Prob = prob**(arr_omega1[:, 0] == "h")*(1-prob)**(arr_omega1[:, 0] == "t") * prob**(arr_omega1[:, 0] == "h")*(1-prob)**(arr_omega1[:, 0] == "t")
+
+arr_omega1Prob
+
+```
+
+```{python}
+
+pd.Series(arr_omega1Prob, index=arr_omega1)    # input array in pd.Series
+
+```
+
 
 
 
