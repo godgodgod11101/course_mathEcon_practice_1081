@@ -88,7 +88,7 @@ build event set
 # }
 
 ```
-set是mutable！但set內無法定義mutable的元素
+set是mutable，但set內無法定義mutable的元素！
 
 frozenset: immutable set
 ```{python}
@@ -111,6 +111,7 @@ print(eventSp)
 len(eventSp)
 
 ```
+
 
 ```{python}
 
@@ -157,7 +158,9 @@ set is iterable
 
 ```
 
-## sample's prob
+# probability
+
+## prob of basic outcomes
 
 ```{python}
 import pandas as pd
@@ -175,7 +178,7 @@ arr_omega1
 
 ```{python}
 
-arr_omega1[:, 0] == "h"
+arr_omega1[:, 0] == "h"    # matrix pick
 arr_omega1[:, 1] == "t"
 
 ```
@@ -183,17 +186,87 @@ arr_omega1[:, 1] == "t"
 計算四種出象之機率（在運算時，True = 1，False = 0）
 ```{python}
 
-arr_omega1Prob = prob**(arr_omega1[:, 0] == "h")*(1-prob)**(arr_omega1[:, 0] == "t") * prob**(arr_omega1[:, 0] == "h")*(1-prob)**(arr_omega1[:, 0] == "t")
+arr_omega1Prob = prob**(arr_omega1[:, 0] == "h")*(1-prob)**(arr_omega1[:, 0] == "t") * prob**(arr_omega1[:, 1] == "h")*(1-prob)**(arr_omega1[:, 1] == "t")
 
 arr_omega1Prob
 
 ```
 
+
 ```{python}
 
-pd.Series(arr_omega1Prob, index=arr_omega1)    # input array in pd.Series
+seri_pOmega = pd.Series(arr_omega1Prob, index=arr_omega1)    # input array in pd.Series
+seri_pOmega
 
 ```
+Series is a one-dimensional labeled array. 
+
+
+### 傳統作法
+
+```{python}
+
+omega1
+
+prob = 0.5
+
+first_toss = [list(omega1)[i][0] == "h" for i in range(len(omega1))]
+second_toss = [list(omega1)[i][1] == "h" for i in range(len(omega1))]
+first_toss
+second_toss
+
+```
+
+```{python}
+
+omega1Prob = [
+  (prob**first_toss[i])*((1-prob)**(1-first_toss[i])) * 
+  (prob**second_toss[i])*((1-prob)**(1-second_toss[i])) 
+  for i in range(len(first_toss))
+]
+omega1Prob
+
+```
+
+```{python}
+
+{
+  ('h', 't'): omega1Prob[0], 
+  ('t', 'h'): omega1Prob[1], 
+  ('h', 'h'): omega1Prob[2], 
+  ('t', 't'): omega1Prob[3]
+}
+
+```
+
+## prob function
+
+Find the probability of event_test from seri_pOmega.
+
+```{python}
+
+event_test = frozenset({('h', 't'), ('h', 'h')})
+print(event_test)
+
+```
+
+```{python}
+
+seri_pOmega.index
+
+# seri_pOmega[('h', 't')]    # didn't work
+seri_pOmega[[('h', 't')]]
+
+```
+必須以list of tuple的方式作為index，來取資料。（可發現XXX.index所顯示的物件有“[]”）
+
+```{python}
+
+seri_pOmega[list(event_test)].sum(axis = 0)
+
+```
+
+### 定義prob fun
 
 
 
