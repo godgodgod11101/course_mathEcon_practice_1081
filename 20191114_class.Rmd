@@ -36,7 +36,9 @@ https://opendata.culture.tw/ --> 文化資料開放服務網
 
 # CH7 Prob & Distr
 
-# sample space
+# Probability Space
+
+## sample space
 
 ```{python}
 
@@ -65,7 +67,7 @@ set內無法定義mutable的元素
 
 ```
 
-# event space
+## event space
 
 The collection of subsets of sample space.
 
@@ -134,7 +136,7 @@ set(itertools.combinations("ABCD", 1))
 
 ```
 
-## Set is iterable! 
+### Set is iterable! 
 
 Verify that every event in eventSp is a subset of omega1. 
 ```{python}
@@ -158,9 +160,9 @@ set is iterable
 
 ```
 
-# probability
+## probability
 
-## prob of basic outcomes
+### prob of basic outcomes
 
 ```{python}
 import pandas as pd
@@ -202,7 +204,7 @@ seri_pOmega
 Series is a one-dimensional labeled array. 
 
 
-### 傳統作法
+#### 傳統作法
 
 ```{python}
 
@@ -239,7 +241,7 @@ omega1Prob
 
 ```
 
-## prob function
+### prob function
 
 Find the probability of event_test from seri_pOmega.
 
@@ -266,7 +268,56 @@ seri_pOmega[list(event_test)].sum(axis = 0)
 
 ```
 
-### 定義prob fun
+#### 定義prob fun
+
+```{python}
+import pandas as pd
+import numpy as np
+```
+
+```{python}
+
+def probFun(A, prob = 0.5): 
+    arr_omega1 = np.array(list(omega1))    # matrix (list) input! 
+    arr_omega1P = (prob**(arr_omega1[:,0] == "h"))*((1-prob)**(arr_omega1[:,0] == "t")) * (prob**(arr_omega1[:,1] == "h"))*((1-prob)**(arr_omega1[:,1] == "t"))
+    seri_omega1WithP = pd.Series(arr_omega1P, index=arr_omega1)
+    return seri_omega1WithP[list(A)].sum()
+
+```
+
+```{python}
+
+[probFun(event) for event in eventSp]
+
+```
+
+### prob space
+
+利用dictionary定義probability space
+```{python}
+
+probSpace_2toss={
+    "sample space": omega1,
+    "event space" : eventSp,
+    "probability" : probFun
+}
+
+```
+
+
+
+# Random Variable
+
+自己看
+
+```{python}
+
+
+
+```
+
+
+
 
 
 

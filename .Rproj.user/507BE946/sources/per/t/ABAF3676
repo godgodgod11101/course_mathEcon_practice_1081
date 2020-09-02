@@ -3,7 +3,7 @@
     "path": "~/GitHub/course_mathEcon_practice_1081/20191114_class.Rmd",
     "project_path": "20191114_class.Rmd",
     "type": "r_markdown",
-    "hash": "388772608",
+    "hash": "29035045",
     "contents": "",
     "dirty": false,
     "created": 1598608611450.0,
@@ -11,17 +11,17 @@
     "relative_order": 1,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "268,14",
-        "scrollLine": "255",
+        "cursorPosition": "310,3",
+        "scrollLine": "294",
         "docOutlineVisible": "1",
-        "last_setup_crc32": "DAF033CF123bc221"
+        "last_setup_crc32": "5EF4C83B123bc221"
     },
     "folds": "",
-    "lastKnownWriteTime": 1598972827,
+    "lastKnownWriteTime": 1599017094,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1598972827013,
+    "last_content_update": 1599017094160,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -1,0 +1,7 @@
+"0","
+def probFun(A, prob = 0.5): 
+    arr_omega1 = np.array(list(omega1))    # matrix (list) input! 
+    arr_omega1P = (prob**(arr_omega1[:,0] == ""h""))*((1-prob)**(arr_omega1[:,0] == ""t"")) * (prob**(arr_omega1[:,1] == ""h""))*((1-prob)**(arr_omega1[:,1] == ""t""))
+    seri_omega1WithP = pd.Series(arr_omega1P, index=arr_omega1)
+    return seri_omega1WithP[list(A)].sum()
+"
