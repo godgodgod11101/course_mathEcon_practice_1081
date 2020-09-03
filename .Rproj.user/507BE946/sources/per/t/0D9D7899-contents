@@ -166,6 +166,17 @@ if "q2ans" not in globals() or not isinstance(q1ans,(dict,)):
 Suppose the definite integral starts from `a=2` to `b=3`. Use `np.linspace()` to divide it into `N` **equal**-width intervals. Make sure that `len(<your array of partitions>)=N`. Save the partition array, name it `x_partition`,  produced by `np.linspace()`.
 
 ```{python ans21}
+
+stPoint = np.linspace(start = 2, stop = 3, num = 11, endpoint = True)
+
+x_partition = []
+
+for i in range(len(stPoint)-1): 
+    x_partition.append([stPoint[i], stPoint[i+1]])
+
+x_partition = np.array(x_partition)
+x_partition
+
 # q2ans['x_partition']=x_partition
 ```
 
@@ -185,6 +196,16 @@ Define a function, called `x_star(x_partition, alpha=0.5)`:
   * alpha: float between 0 and 1 with default 0.5
 
 ```{python ans22}
+
+def x_star(x_partition, alpha=0.5): 
+    list_xStar = []
+    for i in range(len(x_partition)): 
+        xStar = x_partition[i][0] + alpha*(x_partition[i][1]-x_partition[i][0])
+        list_xStar.append(round(xStar, 2))
+    return list_xStar
+
+x_star(x_partition)
+
 # q2ans['x_star']=x_star
 ```
 
