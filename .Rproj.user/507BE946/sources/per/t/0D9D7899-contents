@@ -1,0 +1,235 @@
+---
+title: "homework3"
+output: html_document
+params:
+  studentID: "710761105"
+  studentName: "王正評"
+editor_options: 
+  chunk_output_type: inline
+---
+# 注意事項
+
+存檔與填寫注意事項：
+
+假設你叫王小明，學號41078392。
+
+  1. 存檔時，請用你的學號當延伸檔名。學號為41078392，則請存成homeworkX-41078392.Rmd, X為這次作業號碼。(記得使用：save with enconding, 然後選utf-8)
+
+  2. 本文檔開始的Frontmatter中，studentID（即key）其value目前為"你的學號"，以上面學號為例則必需改成"41078392"；而studentName（key）其value目前為"你的名字"，以上面名字為例則必需改成"王小明"
+
+# 題目
+
+請先執以下code chunk開啟RStudio底下的Python環境：
+
+  * 注意`use_python`的路徑及`use_condaenv`的沙盒環境必需改成你電腦的對應設定。
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("classEnvironment", required = T)
+```
+
+```{python}
+import numpy as np
+import pandas as pd
+```
+
+
+## 作答需知
+
+  * 每一題會有設好的ans chunk，請將你的程式寫在裡面，切勿自行加新的python chunk。
+
+  * 以下每個ans chunk的最後一行有#號mark起來是指定答案物件的名字，請將你運算答案存在該物件，並把最後一行的#號拿掉。
+
+## 1 Probability distribution
+
+Execute the following codes to retrieve the `joint_probability` object. 
+```{python data1}
+import requests
+import pickle
+import numpy as np
+import pandas as pd
+
+q1data=requests.get("https://www.dropbox.com/s/f99mg0kfw52oked/hw3data.pickle?dl=1")
+with open("hw3data.pickle","wb") as f:
+    f.write(q1data.content)
+
+with open("hw3data.pickle",'rb') as f:
+    hw3data=pickle.load(f)
+
+joint_probability=hw3data['joint_probability']
+print(joint_probability)
+
+if "q1ans" not in globals() or not isinstance(q1ans,(dict,)):
+    q1ans = dict([])
+
+```
+
+
+### 1.1 Setting index
+`joint_probability` matrix is a joint probability of weather (rows) vs mood (columns). From row 0 to 2, the weather status is registered in `hw3data['weather index']`. From col 1 to 4, mood status is registered in `hw3data['mood index']`. Convert `joint_probability` to pd.dataFrame, and set weather status as its index and mood status as its column labels. Call this data frame as `df_jointP`.
+
+```{python ans11}
+
+df_jointP = pd.DataFrame(
+  data = hw3data['joint_probability'],    # matrix input (iterable)
+  index = hw3data['weather index'],    # list input (iterable)
+  columns = hw3data['mood index']    # list input (iterable)
+)
+df_jointP
+
+# q1ans['df_jointP']=df_jointP
+```
+
+### 1.2 Sum across different axes
+Compute marginal probability of weather (named it `marginP_weather`) and marginal probability of mood (named it `marginP_mood`)
+
+```{python ans12}
+
+marginP_weather = df_jointP.sum(axis=1)
+marginP_mood = df_jointP.sum(axis=0)
+marginP_weather; marginP_mood
+
+# q1ans['marginP_weather']=marginP_weather; q1ans['marginP_mood']=marginP_mood
+```
+
+### 1.3 Divide method
+Turn `joint_probability` into conditional probabilities of mood on weather (name it `P_mood_cond_weather`); and into conditional probabilities of weather on mood (name it `P_weather_cond_mood`). Hint: dataframe has .divide() method.
+
+```{python ans13}
+
+P_weather_cond_mood = df_jointP.divide(df_jointP.sum(axis=0), axis='columns')
+P_mood_cond_weather = df_jointP.divide(df_jointP.sum(axis=1), axis='rows')
+P_weather_cond_mood; P_mood_cond_weather
+
+# q1ans['P_mood_cond_weather']=P_mood_cond_weather; q1ans['P_weather_cond_mood']=P_weather_cond_mood
+```
+
+
+### 1.4 Select elements
+What is the probability of a person being sad given that the weather is sunny? Name your result value as `p_ans14`.
+
+```{python ans14}
+
+p_ans14 = P_mood_cond_weather.loc['sunny', 'sad']
+p_ans14
+
+# q1ans['ans14']=p_ans14
+```
+
+### 1.5 Estimation
+
+After you left home for office, you notice the weather is cloudy. Which mood your colleague is more likely to have? Name your result as `est_mood`.
+
+```{python ans15}
+
+est_mood = P_mood_cond_weather.loc['cloudy', :].idxmax()
+est_mood
+
+# q1ans['ans15']=est_mood
+```
+
+## 2. Numerical integration
+
+A Riemann sum of a function  over a partition
+$$x_0 = a < x_1 < \cdots < x_{N-1} < x_N = b$$
+is a sum of the form
+$$\sum_{i=1}^N f(x_i^ * ) (x_i - x_{i-1}) \ \ , \ x_i^* \in [x_{i-1},x_i]$$
+where each value $x_i^* \in [x_{i-1},x_i]$ in each subinterval is arbitrary.
+
+Riemann sums are important because they provide an easy way to approximate a definite integral
+$$\int_a^b f(x) \, dx \approx \sum_{i=1}^N f(x_i^ * ) (x_i - x_{i-1}) \ \ , \ x_i^* \in [x_{i-1},x_i]$$
+Notice that the product  for each  is the area of a rectangle of height  and width . We can think of a Riemann sum as the area of  rectangles with heights determined by the graph of .
+
+The following questions guide you to understand its Python execution.
+
+First, run the following codes to obtain a function `f()` representing:
+$$f(x)=1/\log(x).$$
+
+```{python data2}
+import numpy as np
+f = lambda x: 1/np.log(x)
+        
+if "q2ans" not in globals() or not isinstance(q1ans,(dict,)):
+    q2ans = dict([])
+
+
+```
+
+### 2.1 A partition
+
+Suppose the definite integral starts from `a=2` to `b=3`. Use `np.linspace()` to divide it into `N` **equal**-width intervals. Make sure that `len(<your array of partitions>)=N`. Save the partition array, name it `x_partition`,  produced by `np.linspace()`.
+
+```{python ans21}
+# q2ans['x_partition']=x_partition
+```
+
+### 2.2 $x^*_i$ values
+
+It says, "each value $x_i^* \in [x_{i-1},x_i]$ in each subinterval is arbitrary." 
+
+We use a parameter $\alpha\in [0,1]$ to control our pick of $x_i^*$ such that 
+$$x_i^*=x_{i-1}+\alpha(x_i-x_{i-1})$$
+
+When $\alpha=0$, $x^*_i=x_{i-1}$; when $\alpha=1$, $x^*_i=x_i$.
+
+Define a function, called `x_star(x_partition, alpha=0.5)`:
+
+  * x_partition: the interval partition from 2.1
+  
+  * alpha: float between 0 and 1 with default 0.5
+
+```{python ans22}
+# q2ans['x_star']=x_star
+```
+
+### 2.3 Riemann sum
+Compute the following sum:
+$$\sum_{i=1}^N f(x_i^ * ) (x_i - x_{i-1}) \ \ , \ x_i^* \in [x_{i-1},x_i],$$
+
+where $f=1/log(x)$, $a=2,b=3$, $N=100$, and $x^*_i$ is the midpoint of its corresponding interval. Save your result as `rsum`.
+
+```{python ans23}
+# q2ans['ans23']=rsum
+```
+
+### 2.4 Riemann sum function
+Complete the following function.
+
+```{python ans24}
+def riemannsum(fun,interval,N=101,alpha=0.5):
+    """ Riemann sum 
+    Args:
+      fun: a function. takes np.array as its input and returns function value for each array element
+      interval: a list/tuple. defines the integral lower bound a and upper bound b
+      N: int. N-1 is the number of intervals to partition 'interval'
+      alpha: float. between 0,1. determine function value evalutated point within each partition interval.
+    Return:
+      the value of Riemann sum 
+    """
+    
+    
+# q2ans['riemannsum function']=riemannsum
+```
+
+If you did everythin correctly, run the following lines:
+```{python plot, eval=F}
+import matplotlib.pyplot as plt
+Nsequence = np.arange(100,1501)
+Rsum = [riemannsum(f,[2,3],N_i) for N_i in Nsequence]
+
+plt.plot(Nsequence, Rsum, 'b-', linewidth=2)
+plt.show()
+```
+
+You should get a graph like
+```{r, echo=F, eval=T}
+knitr::include_graphics("https://github.com/tpemartin/course-108-1-inclass-program-for-math-econ/blob/master/fig/hw3Figure_1.png?raw=true")
+```
+
+
