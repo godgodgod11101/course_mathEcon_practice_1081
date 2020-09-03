@@ -201,7 +201,7 @@ def x_star(x_partition, alpha=0.5):
     list_xStar = []
     for i in range(len(x_partition)): 
         xStar = x_partition[i][0] + alpha*(x_partition[i][1]-x_partition[i][0])
-        list_xStar.append(round(xStar, 2))
+        list_xStar.append(xStar)
     return list_xStar
 
 x_star(x_partition)
@@ -216,6 +216,25 @@ $$\sum_{i=1}^N f(x_i^ * ) (x_i - x_{i-1}) \ \ , \ x_i^* \in [x_{i-1},x_i],$$
 where $f=1/log(x)$, $a=2,b=3$, $N=100$, and $x^*_i$ is the midpoint of its corresponding interval. Save your result as `rsum`.
 
 ```{python ans23}
+
+stPoint = np.linspace(start = 2, stop = 3, num = 101)
+x_interval_100 = []
+
+for i in range(len(stPoint)-1): 
+    x_interval_100.append([stPoint[i], stPoint[i+1]])
+
+x_interval_100 = np.array(x_interval_100)
+
+
+xStar = x_star(x_interval_100)
+
+
+rsum = 0
+
+for i in range(len(x_interval_100)): 
+    rsum += f(xStar[i])*(x_interval_100[i][1]-x_interval_100[i][0])
+rsum
+
 # q2ans['ans23']=rsum
 ```
 
@@ -234,7 +253,30 @@ def riemannsum(fun,interval,N=101,alpha=0.5):
       the value of Riemann sum 
     """
     
+    # make 'interval' array like array([[2, 2.1], [2.1, 2.2], ...])
+    stPoint = np.linspace(start = interval[0], stop = interval[1], num = N)
+    list_xInterval = []
     
+    for i in range(len(stPoint)-1): 
+        list_xInterval.append([stPoint[i], stPoint[i+1]])
+    
+    list_xInterval = np.array(list_xInterval)
+    
+    # make 'x*' list like [2.05, 2.15, ...]
+    list_xStar = []
+    
+    for i in range(len(list_xInterval)): 
+        xStar = list_xInterval[i][0] + alpha*(list_xInterval[i][1]-list_xInterval[i][0])
+        list_xStar.append(xStar)
+    
+    # Riemann sum
+    rsum = 0
+    
+    for i in range(len(list_xInterval)): 
+        rsum += fun(list_xStar[i])*(list_xInterval[i][1]-list_xInterval[i][0])
+    
+    return rsum
+
 # q2ans['riemannsum function']=riemannsum
 ```
 
@@ -252,5 +294,6 @@ You should get a graph like
 ```{r, echo=F, eval=T}
 knitr::include_graphics("https://github.com/tpemartin/course-108-1-inclass-program-for-math-econ/blob/master/fig/hw3Figure_1.png?raw=true")
 ```
+
 
 

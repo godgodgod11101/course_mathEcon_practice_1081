@@ -1,0 +1,36 @@
+"0","def riemannsum(fun,interval,N=101,alpha=0.5):
+    """""" Riemann sum 
+    Args:
+      fun: a function. takes np.array as its input and returns function value for each array element
+      interval: a list/tuple. defines the integral lower bound a and upper bound b
+      N: int. N-1 is the number of intervals to partition 'interval'
+      alpha: float. between 0,1. determine function value evalutated point within each partition interval.
+    Return:
+      the value of Riemann sum 
+    """"""
+    
+    # make 'interval' array like array([[2, 2.1], [2.1, 2.2], ...])
+    stPoint = np.linspace(start = interval[0], stop = interval[1], num = N)
+    list_xInterval = []
+    
+    for i in range(len(stPoint)-1): 
+        list_xInterval.append([stPoint[i], stPoint[i+1]])
+    
+    list_xInterval = np.array(list_xInterval)
+    
+    # make 'x*' list like [2.05, 2.15, ...]
+    list_xStar = []
+    
+    for i in range(len(list_xInterval)): 
+        xStar = list_xInterval[i][0] + alpha*(list_xInterval[i][1]-list_xInterval[i][0])
+        list_xStar.append(xStar)
+    
+    # Riemann sum
+    rsum = 0
+    
+    for i in range(len(list_xInterval)): 
+        rsum += fun(list_xStar[i])*(list_xInterval[i][1]-list_xInterval[i][0])
+    
+    return rsum
+
+# q2ans['riemannsum function']=riemannsum"

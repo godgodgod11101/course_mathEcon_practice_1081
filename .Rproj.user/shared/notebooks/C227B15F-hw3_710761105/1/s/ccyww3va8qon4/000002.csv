@@ -1,0 +1,6 @@
+"0","import matplotlib.pyplot as plt
+Nsequence = np.arange(100,1501)
+Rsum = [riemannsum(f,[2,3],N_i) for N_i in Nsequence]
+
+plt.plot(Nsequence, Rsum, 'b-', linewidth=2)
+plt.show()"
