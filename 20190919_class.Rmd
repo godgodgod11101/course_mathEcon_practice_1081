@@ -11,9 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(reticulate)
 
 # 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
-use_python("D:\\anaconda3\\envs\\classEnvironment\\python.exe", required = T)
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
 # 在名為classEnvironment的沙盒下寫python
-use_condaenv("classEnvironment", required = T)
+use_condaenv("pyClassEnv_ntpu", required = T)
 ```
 
 
@@ -52,7 +52,7 @@ range
 ```{r}
 
 # reticulate::conda_install(
-#   envname = "classEnvironment",    # 要安裝在哪個沙盒
+#   envname = "pyClassEnv_ntpu",    # 要安裝在哪個沙盒
 #   packages = c("numpy", "pandas")    # 要安裝的modules
 # )
 
@@ -62,7 +62,7 @@ range
 ```{r}
 
 # conda_install(
-#   "classEnvironment", 
+#   "pyClassEnv_ntpu", 
 #   c("google-api-python-client"), 
 #   pip=TRUE    # 先別放這行，試試conda可否安裝。（尚未安裝）
 # )
