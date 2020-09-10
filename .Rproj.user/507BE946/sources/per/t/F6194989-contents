@@ -135,10 +135,11 @@ x2.shape
 ```{python}
 
 x0 + x1
-x0 + x2
+x0 + x2    # broadcasting
 
 ```
 
+上述之 x0 + x2 等於
 ```{python}
 
 a0 = np.array(
@@ -165,21 +166,23 @@ a0 + a2
 
 # elementwise operations
 
+照位置一一做運算
+
 ```{python}
 
 a = np.array(
   [
-    [1.0, 2.0, 3.0],
-    [1.0, 2.0, 3.0]
+    [-1., 4., -6.],
+    [1., 4., 6.]
   ]
-)  
+) 
 
 b = np.array(
   [
-    [-1., 4.0, -6.0],
-    [1.0, 4.0, 6.0]
+    [1., 2., 3.],
+    [1., 2., 3.]
   ]
-) 
+)  
 
 ```
 
@@ -194,6 +197,136 @@ a/b
 
 # broadcasting
 
+當矩陣運算所需的conformability條件不滿足時，
+Python自動更動矩陣的dimension，進而滿足conformability的條件。
+  dimension：指列、行數。(d0, d1)
+  conformability：指兩矩陣列、行數都相等。
+
+```{python}
+
+
+
+```
+
+
+
+# vectorized function
+
+```{python}
+
+def addsub(a,b):
+    if a > b:
+      return a - b
+    else:
+      return a + b
+
+```
+
+```{python}
+
+addsub(2, 3)
+addsub([2, 4], [3, -1])    # wrong! 
+# addsub(
+#   np.array([2, 4]), 
+#   np.array([3, -1])
+# )    # wrong! 
+
+```
+此函數input只能是scalar
+
+使函數可以input array
+```{python}
+
+vec_addsub = np.vectorize(addsub)
+
+vec_addsub(
+  np.array([2, 4]), 
+  np.array([3, -1])
+)
+
+vec_addsub(
+  [2, 4], 
+  [3, -1]
+)
+
+```
+
+已內建的函數（可input array）：
+  https://docs.scipy.org/doc/numpy/reference/ufuncs.html#available-ufuncs
+
+
+
+# 矩陣運算
+
+## 矩陣相乘
+
+```{python}
+
+A = np.array(
+  [
+    [2, 4],
+    [1, 3]
+  ]
+)
+
+B = np.array(
+  [
+    [-1, 2],
+    [-3, 4]
+  ]
+)
+
+A*B    # wrong! 
+A@B
+
+```
+
+## 矩陣轉置
+
+```{python}
+
+matrix1 = np.array(
+  [
+    [2, 3, -1], 
+    [8, 11, 5]
+  ]
+)
+
+matrix1
+matrix1.T
+
+```
+
+## 反矩陣 & 行列式
+
+```{python}
+from numpy.linalg import inv, det
+```
+
+計算
+$$\hat{\beta} = (X^TX)^{-1} X^TY $$
+```{python}
+
+y = np.array([[2,3,4,6]]).T
+x = np.array(
+  [
+    [1,1,1,1],
+    [0,-2,4,7]
+  ]
+).T
+
+```
+
+```{python}
+
+def betaFun(x, y): 
+    x1 = x.T @ x
+    x2 = x.T @ y
+    return inv(x1) @ x2
+
+betaFun(x, y)
+
+```
 
 
 
