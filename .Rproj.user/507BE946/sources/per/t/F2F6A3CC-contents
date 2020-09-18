@@ -1,0 +1,59 @@
+---
+title: "Untitled"
+author: "jacky wang"
+date: "2020/9/15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("pyClassEnv_ntpu", required = T)
+```
+若無法執行set up chunk，按Session－＞按Restart R
+
+**技巧**
+
+按小齒輪－＞按chunk output in console：讓console可編譯Python（>>> Python code）。
+  在console打exit，就會回復原狀（> R code）。
+
+在console裡打“repl_python()”，讓console可編譯Python（>>> Python code）。
+
+shift + Tab：回彈兩格。
+
+**連結**
+
+https://opendata.culture.tw/ --> 文化資料開放服務網
+
+
+
+
+
+# Bayesian Theorem
+
+```{python}
+
+import numpy.random as rs_rv
+
+```
+
+```{python}
+
+rs_rv.standard_normal(size = 10)
+rs_rv.standard_normal(size = (10, 2))    # 10 by 2 matrix
+rs_rv.choice(
+  a = [0, 1], 
+  size = 100, 
+  replace= True, 
+  p = [0.9, 0.1]
+)
+
+
+```
+
+
