@@ -1,0 +1,11 @@
+"0","
+generator_rn = default_rng(200)
+
+# x = generator_rn.standard_normal(size = 100)
+# ep = generator_rn.standard_normal(size = 100)
+
+# concise codes
+x, ep = generator_rn.standard_normal(size = (2, 10))    # unpacking 
+
+y = 0.1*x + 0.33*ep
+"

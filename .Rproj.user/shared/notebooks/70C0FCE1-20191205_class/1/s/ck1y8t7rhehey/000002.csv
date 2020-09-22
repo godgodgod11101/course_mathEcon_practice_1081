@@ -1,0 +1,8 @@
+"0","
+yFun = lambda x, ep: 0.1*x + 0.33*ep
+
+# def yFun(x, ep):
+#     return 0.1*x + 0.33*ep
+
+vec_yFun = np.vectorize(yFun)
+"

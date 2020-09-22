@@ -36,24 +36,194 @@ https://opendata.culture.tw/ --> 文化資料開放服務網
 
 # Bayesian Theorem
 
+Tossing a coin 100 times. 
+Given
+$$Y_i \stackrel{iid}{\sim} Bernoulli(p) $$
+, 
+What is
+$$Pr(sample | \theta)$$
+?
+
+$$
+Pr(\{Y_i\} = \{y_i\} | p) = \\
+  Pr(Y_1 = y_1, Y_2 = y_2, ..., Y_{100} = y_{100} | p) = \\
+  Pr(Y_1 = y_1 | p) Pr(Y_2 = y_2 | p) ... Pr(Y_{100} = y_{100} | p) = \\
+  \prod_{i=1}^{100} p^{y_i} (1-p)^{1-y_i} = L(p)
+$$
+
+Suppose there are only two possible p values: 0.1 and 0.3. 
+What would be the likelihood value of a sample with 50 heads and 50 tails?
+
+install SciPy
+```{r}
+
+# reticulate::conda_install(
+#   envname = "pyClassEnv_ntpu", 
+#   packages = "scipy"
+# )
+
+```
+
+```{python}
+import scipy.stats as stat
+```
+
 ```{python}
 
-import numpy.random as rs_rv
+binom_1 = stat.binom(n = 100, p = 0.1)
+binom_1.pmf(50)
+
+binom_2 = stat.binom(n = 100, p = 0.3)
+binom_2.pmf(50)
+
+```
+
+
+
+## 兩種產生random number的方式
+
+### Legacy Random Generation (RandomState)
+
+```{python}
+
+import numpy.random as leg_rn
 
 ```
 
 ```{python}
 
-rs_rv.standard_normal(size = 10)
-rs_rv.standard_normal(size = (10, 2))    # 10 by 2 matrix
-rs_rv.choice(
-  a = [0, 1], 
+leg_rn.standard_normal(size = 10)
+
+leg_rn.standard_normal(size = (2, 2))    # 2 by 2 matrix (input tuple of ints)
+leg_rn.standard_normal(size = (2, 2)).shape
+
+
+
+```
+
+```{python}
+
+# Bernoulli distr.
+
+sample1 = leg_rn.choice(
+  a = [0, 1],    # sample space
   size = 100, 
   replace= True, 
-  p = [0.9, 0.1]
+  p = [0.9, 0.1]    # prob. to sample space
 )
 
+sample2 = leg_rn.choice(
+  a = [0, 1],    # sample space
+  size = 100, 
+  replace= True, 
+  p = [0.7, 0.3]    # prob. to sample space
+)
+
+sample1.sum()
+sample2.sum()
 
 ```
+
+設定亂數表的起始點（亂打一個數字）
+```{python}
+
+leg_rn.seed(2019)
+
+leg_rn.standard_normal(size = 10)
+
+```
+
+### Random Generator (Generator)
+
+```{python}
+from numpy.random import default_rng
+```
+
+```{python}
+
+default_rng().standard_normal(size = 10)
+
+```
+
+```{python}
+
+gSample1 = default_rng().choice(
+  a = [0, 1],    # sample space
+  size = 100, 
+  replace= True, 
+  p = [0.9, 0.1]    # prob. to sample space
+)
+
+gSample1
+
+```
+
+設定亂數表的起始點（亂打一個數字）
+```{python}
+
+default_rng(2019).standard_normal(size = 10)
+
+```
+
+### practice
+
+```{python}
+
+yFun = lambda x, ep: 0.1*x + 0.33*ep
+
+# def yFun(x, ep):
+#     return 0.1*x + 0.33*ep
+
+vec_yFun = np.vectorize(yFun)
+
+```
+
+```{python}
+
+import numpy.random as leg_rn
+
+leg_rn.seed(200)
+
+sampleJ = leg_rn.standard_normal(size = (10, 2))
+
+np.stack(
+  (
+    vec_yFun(x = sampleJ[:, 0], ep = sampleJ[:, 1]),
+    sampleJ[:, 0]
+  ),
+  axis = -1
+)
+
+```
+
+#### T's answer
+
+```{python}
+from numpy.random import default_rng
+```
+
+```{python}
+
+generator_rn = default_rng(200)
+
+# x = generator_rn.standard_normal(size = 100)
+# ep = generator_rn.standard_normal(size = 100)
+
+# concise codes
+x, ep = generator_rn.standard_normal(size = (2, 10))    # unpacking 
+
+y = 0.1*x + 0.33*ep
+
+```
+
+
+
+
+
+
+
+
+
+# 123
 
 
