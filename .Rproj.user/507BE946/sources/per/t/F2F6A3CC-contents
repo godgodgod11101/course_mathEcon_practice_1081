@@ -36,12 +36,14 @@ https://opendata.culture.tw/ --> 文化資料開放服務網
 
 # Bayesian Theorem
 
+## likelihood
+
 Tossing a coin 100 times. 
 Given
 $$Y_i \stackrel{iid}{\sim} Bernoulli(p) $$
 , 
 What is
-$$Pr(sample | \theta)$$
+$$Pr(sample | p)$$
 ?
 
 $$
@@ -68,17 +70,17 @@ install SciPy
 import scipy.stats as stat
 ```
 
+100次有50次正面的機率：
 ```{python}
 
-binom_1 = stat.binom(n = 100, p = 0.1)
-binom_1.pmf(50)
+stat.binom(n = 100, p = 0.1).pmf(50)
+stat.binom(n = 100, p = 0.3).pmf(50)
 
-binom_2 = stat.binom(n = 100, p = 0.3)
-binom_2.pmf(50)
+stat.binom(n = 100, p = 0.5).pmf(50)
+stat.binom(n = 100, p = 0.49).pmf(50)
 
 ```
-
-
+若100次中出現50次正面，那p應該是0.3而非0.1（單純比較0.3和0.1）。
 
 ## 兩種產生random number的方式
 
@@ -96,8 +98,6 @@ leg_rn.standard_normal(size = 10)
 
 leg_rn.standard_normal(size = (2, 2))    # 2 by 2 matrix (input tuple of ints)
 leg_rn.standard_normal(size = (2, 2)).shape
-
-
 
 ```
 
@@ -169,6 +169,8 @@ default_rng(2019).standard_normal(size = 10)
 
 ```{python}
 
+import numpy as np
+
 yFun = lambda x, ep: 0.1*x + 0.33*ep
 
 # def yFun(x, ep):
@@ -216,12 +218,51 @@ y = 0.1*x + 0.33*ep
 
 ```
 
+```{python}
+
+np.stack(
+  (y, x), 
+  axis = -1
+)
+
+```
+
+### homework
+
+Data Generating Process (DGP)
 
 
 
 
+## posterior distribution
 
+Suppose prior $Pr(p = 0.1) = 0.3$, $Pr(p = 0.3) = 0.7$. 
+What would be the posterior $Pr(p|sample)$ 
 
+```{python}
+import scipy.stats as stat
+```
+
+```{python}
+
+# likelihood of p = 0.1 (0.3)
+likeli_1 = stat.binom(n = 100, p = 0.1).pmf(50)
+likeli_3 = stat.binom(n = 100, p = 0.3).pmf(50)
+
+# scaled posterior (sum != 1)
+likeli_1*0.3 + likeli_3*0.7
+
+```
+
+已知$Pr(0.1|sample) + Pr(0.3|sample) = 1$（只有兩種outcome，所有outcome機率總和為1）
+```{python}
+
+posterior_1 = likeli_1*0.3 / (likeli_1*0.3 + likeli_3*0.7)
+posterior_3 = likeli_3*0.7 / (likeli_1*0.3 + likeli_3*0.7)
+posterior_1; posterior_3
+
+```
+在sample為50次正面的狀況下，p基本上就是0.3了（後驗機率幾乎是1）。
 
 
 # 123
