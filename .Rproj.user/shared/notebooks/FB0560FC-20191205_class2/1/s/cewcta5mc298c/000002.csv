@@ -1,0 +1,13 @@
+"0","
+import numpy as np
+from numpy.linalg import inv, det
+
+class modelY: 
+    
+    typeX = ""linear""
+    
+    def fit(self, X, y): 
+        self.coef = inv(X.T@X)@X.T@y    # beta hat
+        fitted = X@inv(X.T@X)@X.T@y    # y hat
+        return fitted
+"

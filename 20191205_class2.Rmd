@@ -1,0 +1,177 @@
+---
+title: "20191205 class2"
+author: "jacky wang"
+date: "2020/9/24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("pyClassEnv_ntpu", required = T)
+```
+若無法執行set up chunk，按Session－＞按Restart R
+
+**技巧**
+
+按小齒輪－＞按chunk output in console：讓console可編譯Python（>>> Python code）。
+  在console打exit，就會回復原狀（> R code）。
+
+在console裡打“repl_python()”，讓console可編譯Python（>>> Python code）。
+
+shift + Tab：回彈兩格。
+
+**連結**
+
+https://opendata.culture.tw/ --> 文化資料開放服務網
+
+
+
+
+
+# CH10 Object Oriented Programming
+
+# basic concept
+
+有哪些屬性要放在linFamily（物件的類別）裡？
+  surname、firstname、gender
+  
+  共通屬性：surname
+  自我屬性：firstname、gender（放在__init__裡，“def __init__(self, ”必寫）
+
+```{python}
+
+class linFamily: 
+    
+    surname = "Lin"    # common attributes
+    
+    def __init__(self, firstname, gender):    # self attributes
+        self.firstname=firstname
+        self.gender=gender
+    
+    def __repr__(self): 
+        return "I am {b} {a}. Gender: {c}".format(
+          a = self.surname, b = self.firstname, c = self.gender
+        )
+
+```
+
+```{python}
+
+linFamily(firstname = "Jack", gender = "male")
+linFamily(gender = "male", firstname = "Jack")
+
+member1 = linFamily(firstname = "Jack", gender = "male")
+# isinstance(obj = member1, class_or_tuple = linFamily)    # no keyword arguments! 
+isinstance(member1, linFamily)
+```
+
+```{python}
+
+member1
+member1.firstname
+member1.surname
+member1.gender
+
+```
+
+## practice
+
+```{python}
+
+import numpy as np
+from numpy.linalg import inv, det
+
+class modelX: 
+    
+    typeX = "linear"
+    
+    def fit(self, X, y): 
+        self.coef = inv(X.T@X)@X.T@y    # beta hat
+        self.fitted = X@inv(X.T@X)@X.T@y    # y hat
+
+```
+
+```{python}
+
+import numpy as np
+
+x0 = np.ones(100)    # an array filled with ones
+x1 = np.random.rand(100)    # an array with random samples from uniform distr.
+
+X = np.column_stack((x0, x1))    # Stack 1-D arrays as columns into a 2-D array.
+
+y = np.random.rand(100)
+y.shape=(100, 1)    # convert 1-D array to 2-D array as 100*1 
+
+```
+
+```{python}
+
+model1 = modelX()    # create an instance
+
+model1.fit(X, y)
+model1.coef
+# model1.fitted    # too long
+
+
+```
+
+使“fitted”不要形成instance（實體物件）的attribute
+```{python}
+
+import numpy as np
+from numpy.linalg import inv, det
+
+class modelY: 
+    
+    typeX = "linear"
+    
+    def fit(self, X, y): 
+        self.coef = inv(X.T@X)@X.T@y    # beta hat
+        fitted = X@inv(X.T@X)@X.T@y    # y hat
+        return fitted
+
+```
+
+```{python}
+
+model1 = modelY()
+
+y_hat = model1.fit(X, y)
+model1.coef
+# model1.fitted    # 'modelY' object has no attribute 'fitted'
+
+
+```
+這樣fit（method of modelY）就不會去新增（更改）model1（instance）的attr.
+
+```{python}
+
+class modelY1: 
+    
+    typeX = "linear"
+    
+    def fit(X, y): 
+        coef = inv(X.T@X)@X.T@y    # beta hat
+        fitted = X@inv(X.T@X)@X.T@y    # y hat
+        return (coef, fitted)
+
+```
+
+```{python}
+
+a, b = modelY1.fit(X, y)
+a
+# b    # too long
+
+```
+
+
+
+
