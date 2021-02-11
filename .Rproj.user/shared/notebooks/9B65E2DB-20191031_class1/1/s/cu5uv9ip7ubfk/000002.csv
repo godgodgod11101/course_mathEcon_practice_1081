@@ -1,3 +1,0 @@
-"0","
-finStatement = pds.read_csv(""http://mopsfin.twse.com.tw/opendata/t187ap06_O_ci.csv"")
-"

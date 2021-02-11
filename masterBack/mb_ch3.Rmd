@@ -1,0 +1,103 @@
+---
+title: "Master Back CH.3"
+author: "jacky wang"
+date: "2021/2/10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("pyClassEnv_ntpu", required = T)
+```
+
+
+
+# 3-1
+
+```{python}
+
+type(3)
+type(3.5)
+type("3")
+type(True)
+
+```
+
+# 3-4
+
+```{python}
+
+num1 = "123"
+num2 = "456"
+num1 + num2
+num1 + " " + num2
+
+del num1, num2
+
+```
+
+```{python}
+
+# 多於一行的字串
+str1 = '''Hello! This is 
+Jacky's laptop.'''
+
+print(str1)
+
+```
+
+```{python}
+
+# 逸出字元
+str1 = 'Hello!\tThis is Jacky\'s laptop.'
+print(str1)
+
+```
+
+```{python}
+
+# 字串複製
+x = "A"
+x*5
+
+```
+
+```{python}
+
+# 利用字串加法換行
+x = "My name is Dawn. "; y = "What's your name? "; z = "My name is Jacky. "
+print(x + "\n" + y + "\n" + z)
+
+```
+
+```{python}
+# 取消逸出字元
+print("Hello \nworld!")
+print(r"Hello \nworld!")
+
+```
+
+# 3-6
+
+## 地到月
+
+```{python}
+
+dist = 384400; speed = 1225
+total_hours = round(dist/speed)
+days = total_hours // 24
+hours = total_hours % 24
+print("It takes", days, "days and", hours, "hours. ")
+
+```
+
+
+
+
+

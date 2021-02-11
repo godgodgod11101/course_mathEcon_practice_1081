@@ -1,8 +1,0 @@
-"0","
-def normalPDF(x, mean=0, sigma=1): 
-    a = (2 * np.pi * sigma**2)**(-0.5)
-    b = np.exp(
-      -((x - mean)**2 / 2*sigma**2)
-    )
-    return a*b
-"

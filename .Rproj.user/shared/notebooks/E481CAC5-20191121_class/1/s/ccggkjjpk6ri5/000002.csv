@@ -1,7 +1,0 @@
-"0","
-X = np.column_stack([x1, x2])
-
-Px = X @ inv(X.T@X) @ X.T
-
-y_hat = Px @ y
-"

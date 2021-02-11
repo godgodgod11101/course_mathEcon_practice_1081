@@ -1,0 +1,140 @@
+---
+title: "Master Back CH.2"
+author: "jacky wang"
+date: "2021/2/10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("pyClassEnv_ntpu", required = T)
+```
+
+
+
+# 2-3
+
+```{python}
+
+# 收入
+hourly_salary = 125
+annual_salary = hourly_salary*8*300
+
+# 支出
+monthly_fee = 9000
+annual_fee = monthly_fee*12
+annual_savings = annual_salary - annual_fee
+
+print(annual_savings)
+
+```
+
+```{python}
+# 刪除物件
+del hourly_salary, annual_salary, monthly_fee, annual_fee, annual_savings
+```
+
+
+
+# 2-6
+
+```{python}
+
+100 // 11    # 整除
+100 % 11    # 餘數
+3 ** 2    # 次方
+
+```
+
+
+
+# 2-7
+
+```{python}
+
+a = 10
+a += 5    # a = a + 5
+del a
+
+```
+
+
+
+# 2-8
+
+```{python}
+
+z = divmod(9, 5)    # tuple (x//y, x%y)
+x, y = z    # 多重指定
+x; y
+del x, y
+
+```
+
+
+
+# 2-10
+
+```{python}
+
+a = b = c = 10
+x = a + b + c
+
+# 續行1
+y = a +\
+    b +\
+    c
+
+# 續行2
+z = ( a +    # 可加註解
+      b +
+      c )
+
+del a, b, c, x, y, z
+
+```
+
+
+
+# 2-11
+
+## 複利
+
+```{python}
+
+money_today = 50000
+year_rate = 0.015
+money_future = money_today * (1+year_rate)**5
+print("本利和是", money_future)
+
+del money_today, year_rate, money_future
+
+```
+
+## 圓周長及面積
+
+```{python}
+
+PI = 3.14159    # 可利用大寫字母代表具名常數（named constant）
+rr = 5
+
+# 周長
+circumference = 2 * PI * rr
+print("circumference: ", circumference, sep="")
+
+# 面積
+area = PI * rr**2
+print("area: ", area, sep="")
+
+del PI, rr, circumference, area
+
+```
+
+
+
