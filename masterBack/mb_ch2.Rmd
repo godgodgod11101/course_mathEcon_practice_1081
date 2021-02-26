@@ -29,6 +29,7 @@ annual_salary = hourly_salary*8*300
 # 支出
 monthly_fee = 9000
 annual_fee = monthly_fee*12
+
 annual_savings = annual_salary - annual_fee
 
 print(annual_savings)
@@ -73,7 +74,7 @@ del a
 z = divmod(9, 5)    # tuple (x//y, x%y)
 x, y = z    # 多重指定
 x; y
-del x, y
+del x, y, z
 
 ```
 
@@ -86,12 +87,12 @@ del x, y
 a = b = c = 10
 x = a + b + c
 
-# 續行1
+# 續行1（框起來一起跑）
 y = a +\
     b +\
     c
 
-# 續行2
+# 續行2（框起來一起跑）
 z = ( a +    # 可加註解
       b +
       c )

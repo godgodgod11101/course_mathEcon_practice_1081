@@ -56,7 +56,12 @@ print(str1)
 
 # 逸出字元
 str1 = 'Hello!\tThis is Jacky\'s laptop.'
+str2 = "Hello!\tThis is Jacky's laptop."    # '免逸出
+
 print(str1)
+print(str2)
+
+del str1, str2
 
 ```
 
@@ -73,6 +78,8 @@ x*5
 # 利用字串加法換行
 x = "My name is Dawn. "; y = "What's your name? "; z = "My name is Jacky. "
 print(x + "\n" + y + "\n" + z)
+
+del x, y, z
 
 ```
 
@@ -93,6 +100,15 @@ dist = 384400; speed = 1225
 total_hours = round(dist/speed)
 days = total_hours // 24
 hours = total_hours % 24
+print("It takes", days, "days and", hours, "hours. ")
+
+```
+
+```{python}
+
+dist = 384400; speed = 1225
+total_hours = round(dist/speed)
+days, hours = divmod(total_hours, 24)
 print("It takes", days, "days and", hours, "hours. ")
 
 ```
