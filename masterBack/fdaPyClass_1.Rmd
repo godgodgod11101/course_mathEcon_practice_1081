@@ -1,0 +1,342 @@
+---
+title: "Untitled"
+author: "jacky wang"
+date: "2021/3/4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("pyClassEnv_ntpu", required = T)
+```
+
+
+
+# 20210303
+
+搜尋關鍵字：anaconda individual －＞ 下載 －＞ 安裝（記得勾選environment path）
+
+# 格式化輸出
+
+```{python}
+
+school = "TMU"
+name = "David"
+school + " is " + name + "'s favorite school. "
+
+print("%s is %s's favorite school. " % (school, name))    # %s：格式化字串輸出
+print("%s got %d marks on math exam. " % (name, 85))    # %d：格式化整數輸出
+
+print("{} is {}'s favorite school. ".format(school, name))
+print("{1} is {0}'s favorite school. ".format(name, school))
+print("{a} is {b}'s favorite school. ".format(b = name, a = school))
+
+```
+
+```{python}
+
+hour_salary = 125.5
+work_hour = 7
+work_day = 21
+month_income = hour_salary*work_hour*work_day
+print("monthly income: %.2f" % month_income)
+print("monthly income: %.3f" % month_income)
+
+```
+
+```{python}
+
+print("{a:3d}\n{b:.4f}".format(a = 100, b = 1.2345))
+
+```
+
+```{python}
+
+x = 100; y = 10.5; z = 'Deep'
+
+print('/%4d/' % (x))    # 保留4格
+print('/%5.1f/' % (y))    # 保留5格（小數點也算），小數保留一格
+print('/%5s/' % (z))
+
+# 格數不足，照常顯示
+print('/%1d/' % (x))
+print('/%3.2f/' % (y))
+print('/%2s/' % (z))
+
+```
+
+# 斷行
+
+```{python}
+
+a = b = c = 10
+d = a+\
+    b+\
+    c
+print(d)
+
+```
+
+# type()
+
+```{python}
+
+x = 10.6
+int(x)    # int()：轉整數（直接捨去小數）
+
+```
+
+```{python}
+
+# py之布林值
+type(True)
+type(False)
+
+```
+
+# 長字串
+
+```{python}
+
+x = '''jj;j;kl;jlkjkj;j;lkj;j;lj;lkj;lkj;lkj;ljlklkknmnj;lkj;klghkgkhjkg'''
+print(x)
+
+```
+
+# 與使用者互動
+
+```{python}
+
+fah = float(input("degrees Fahrenheit: "))
+cel = (fah-32)*5/9
+print("degrees Celsius: %.2f"%(cel))
+
+```
+
+
+
+# 20210304
+
+老師EMail：wpchang@tmu.edu.tw
+
+# if... else...
+
+```{python}
+
+age = input("Please enter your age: ")
+if int(age)<20: 
+  print("too young! ")
+else: 
+  print("OK! ")
+
+```
+
+to jupyter notebook
+
+# list
+
+```{python}
+
+james = [23,18,15,51,36]
+type(james)
+
+print(james[0], james[4])
+
+```
+
+```{python}
+
+# list可放不同type的元素
+james = ["Lebron James",23,18,15,51,36]
+james
+
+```
+
+## 讀取串列內元素
+
+```{python}
+
+james = [23,18,15,51,36]
+g1, g2, g3, g4, g5 = james
+print("Lebron James' score in last 5 games:", g1, g2, g3, g4, g5)
+del g1, g2, g3, g4, g5
+
+print("Lebron James' score in G1-G3:", james[0], james[1], james[2])
+
+```
+
+## 串列切片
+
+```{python}
+
+james = [23,18,15,51,36]
+print("Lebron James' score in G1-G3:", james[0:3])    # 0~2
+print("Lebron James' score in G1-G3:", james[:3])
+print("Lebron James' score in G1, G3, G5:", james[0:6:2])    # 0, 2, 4
+print("Lebron James' score in G3-G5:", james[-3:])
+
+```
+
+## 串列統計資料
+
+```{python}
+
+james = [23,18,15,51,36]
+print("maximum: ", max(james))
+print("minimum: ", min(james))
+print("sum: ", sum(james))
+print("mean: %.1f" % (sum(james)/len(james)))
+
+# 串列長度
+len(james)
+
+```
+
+## 更改串列內元素
+
+```{python}
+
+james = [23,18,15,51,36]
+print(james)
+james[0] = 33
+print(james)
+
+del james
+
+```
+
+## 串列相加
+
+```{python}
+
+car1 = ['BMW', 'BENZ', 'AUDI']
+car2 = ['TOYOTA', 'NISSAN']
+
+car1 += car2    # car1 = car1 + car2
+print(car1)
+
+```
+
+## 刪除串列內元素
+
+```{python}
+
+car = ['BMW', 'BENZ', 'AUDI', 'TOYOTA', 'NISSAN']
+print(car)
+del car[0:2]
+print(car)
+
+```
+
+## 串列method
+
+### append, extend
+
+```{python}
+
+car1 = ['BMW', 'BENZ', 'AUDI']
+car2 = 'TOYOTA'
+car3 = ['NISSAN', 'SUZUKI']
+car1.append(car2); print(car1)
+car1.append(car3); print(car1)    # 直接在串列末端新增元素
+
+car1 = ['BMW', 'BENZ', 'AUDI']
+car1.extend(car3); print(car1)    # 先將串列分解成一般元素，再一一加入
+
+```
+
+### pop, remove
+
+```{python}
+
+car = ['BMW', 'BENZ', 'AUDI', 'TOYOTA', 'NISSAN']
+# 不指定，刪最後一筆
+car.pop()    # 會回傳刪除的值
+print(car1)
+# 指定
+car.pop(0)
+print(car1)
+
+```
+
+```{python}
+
+car = ['BMW', 'NISSAN', 'BENZ', 'AUDI', 'NISSAN', 'TOYOTA', 'NISSAN']
+car.remove("NISSAN")    # 刪除指定值
+print(car)    # 只刪除第一個'NISSAN'
+
+```
+
+```{python}
+
+# 刪'AUDI'
+# car = ['BMW', 'BENZ', 'AUDI', 'TOYOTA', 'NISSAN', 'AUDI']
+# car.index('AUDI')
+# del car[car.index('AUDI')]
+# print(car)    # 只刪除第一個'AUDI'
+
+```
+
+### insert
+
+```{python}
+
+car = []
+car.append('HONDA'); print(car)
+car.append('FORD'); print(car)
+car.append('VOLVO'); print(car)
+
+car.insert(1, "NISSAN"); print(car)    # 在 index=1 的位置插入'NISSAN'
+
+```
+
+### reverse, sort
+
+```{python}
+
+car = ['BMW', 'BENZ', 'AUDI', 'NISSAN', 'VOLVO', 'TOYOTA', 'MAZDA']
+print(car)
+car.reverse()
+print(car)
+
+```
+
+```{python}
+
+james = [23, 18, 15, 51, 36]
+print(james)
+james.sort()
+print(james)
+james.sort(reverse=True)
+print(james)
+
+```
+
+### count
+
+```{python}
+
+car = ['BMW', 'BENZ', 'BMW', 'AUDI', 'NISSAN', 'VOLVO', 'BMW', 'TOYOTA', 'MAZDA']
+car.count('BMW')    # 數指定值個數
+
+```
+
+## 巢狀串列
+
+```{python}
+
+cars = ['BMW', 'BENZ', 'AUDI', 'NISSAN', ['VOLVO', 'FORD', 'MAZDA']]
+cars[4][0]
+
+```
+
+
+
+
+
