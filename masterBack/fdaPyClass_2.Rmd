@@ -1,0 +1,162 @@
+---
+title: "Untitled"
+author: "jacky wang"
+date: "2021/3/26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("pyClassEnv_ntpu", required = T)
+```
+
+
+
+# 20210326
+
+```{python}
+
+cars = ['bmw', 'benz', 'nissan', '   aaa   ']
+print(cars[0].upper())
+print(cars[0].title())
+
+# 必學！爬蟲時常用
+print(cars[3])
+print(cars[3].strip())    # 刪除兩邊空白
+
+del cars
+```
+
+```{python}
+
+cars = ['HONDA', 'BMW', 'TOYOTA', 'FORD']
+cars.reverse(); print(cars)
+
+score = [23, 19, 20, 25, 18]
+score.sort(); print(score)    # 升冪排列
+score.sort(reverse = True); print(score)    # 降冪排列
+
+del cars, score
+```
+
+```{python}
+
+cars = ['Bmw', 'Benz', 'Nissan']
+search_car = 'Benz'
+i = cars.index(search_car)
+print("'%s' index: %d" % (search_car, i))
+
+```
+
+```{python}
+
+cars = ['Bmw', 'Benz', 'Nissan']
+search_car = '  nissan  '    # 找不到字串
+
+try: 
+  i = cars.index(search_car.title())
+  print("'%s' index: %d" % (search_car, i))
+except: 
+  print('No such car! ')
+  pass
+
+```
+
+```{python}
+
+cars = ['Bmw', 'Benz', 'Nissan']
+search_car = '  nissan  '
+
+try: 
+  i = cars.index(search_car.title().strip())    # method堆疊
+  print("'%s' index: %d" % (search_car, i))
+except: 
+  print('No such car! ')
+  pass
+
+```
+
+```{python}
+
+cars = ['toyota', 'nissan', 'honda', 'nissan', 'nissan', 'ford']
+search_car = 'nissan'
+n = cars.count(search_car)
+print("'%s' count: %d" % (search_car, n))
+
+```
+
+```{python}
+
+cars = ['toyota', 'nissan', 'honda', 'nissan', 'nissan', 'ford']
+search_car = 'aaa'    # 找不到字串
+n = cars.count(search_car)
+print("'%s' count: %d" % (search_car, n))
+
+```
+
+# count and set
+
+```{python}
+
+school_data = ['elementary', 'junior', 'senior', 'junior', 'senior']
+set(school_data)
+
+[{school: school_data.count(school)} for school in set(school_data)]
+
+```
+
+```{python}
+
+sc = [['劉德華', 88, 76, 50, 91], ['張學友', 77, 80, 76, 85]]
+sum(sc[0][1:4])
+
+```
+
+# 串列複製應用（shallow, deep）
+
+```{python}
+
+mySports = ['basketball', 'baseball']
+print('My favorite sports: ', mySports)
+johnSports = mySports
+print("John's favorite sports: ", johnSports)
+
+mySports.append('football')
+print('='*80)    # 我是分隔線
+print('My favorite sports: ', mySports)
+print("John's favorite sports: ", johnSports)
+
+```
+
+```{python}
+
+mySports = ['basketball', 'baseball']
+print('My favorite sports: ', mySports)
+johnSports = mySports[:]    # deep copy
+print("John's favorite sports: ", johnSports)
+
+mySports.append('football')
+print('='*80)    # 我是分隔線
+print('My favorite sports: ', mySports)
+print("John's favorite sports: ", johnSports)
+
+```
+
+```{python}
+
+
+
+```
+
+
+
+
+
+
+
