@@ -150,11 +150,169 @@ print("John's favorite sports: ", johnSports)
 
 ```{python}
 
+str1 = 'Taipei Medical University Healthcare'
+str1.split(' ')
+str2 = 'D:/java/Jre'
+str2.split('/')
 
+# 只取某部分元素
+str1.split(' ')[-1]
 
 ```
 
+```{python}
 
+url1 = 'https://24h.pchome.com.tw/sign/3c.htm'
+url1.split('//')[1]
+url1.split('//')[1].startswith('www')    # 開頭是否為'www'
+
+if url1.split('//')[1].startswith('www'): 
+  print('yes')
+else: 
+  print('no')
+
+```
+
+```{python}
+
+if url1.split('//')[1].startswith('www') | url1.startswith('http'): 
+  print('yes')
+else: 
+  print('no')
+
+```
+
+```{python}
+
+files = ['da1.c', 'da2.py', 'da3.py', 'da4.java']
+pyScript = []
+
+for i in files:
+  if i.endswith('py'): 
+    pyScript.append(i)
+
+print(pyScript)
+
+```
+
+```{python}
+
+path = ['D:', 'python', 'web.py']
+connect = '*'
+print(connect.join(path))
+# or
+print('*'.join(path))    # 較常見
+
+print('\\'.join(path))    # \: 逸出字元
+
+```
+
+```{python}
+
+aa = 'iron man'
+b = '/'.join(aa.split())
+print(b)
+
+```
+
+```{python}
+
+fruits = ['apple', 'banana', 'pineapple']
+
+fruit = input('add something? ')
+if fruit in fruits: 
+  print('already have')
+else: 
+  fruits.append(fruit)
+  print('add it! ', fruits)
+
+```
+
+```{python}
+
+lyrics = '''Twinkle twinkle Little Star, 
+Twinkle twinkle little star,
+How I wonder what you are, 
+Up above the world so high,
+Like a diamond in the sky, 
+Twinkle twinkle little star, 
+How I wonder what you are'''
+
+lyrics.replace('\n', ' ').replace(',', '').split(' ').count('Twinkle')
+
+```
+
+```{python}
+
+fruits = ['apple', 'banana', 'pineapple']
+for xx in fruits:
+  print(xx.startswith('a'))
+
+```
+
+```{python}
+
+money = 50000
+rate = 0.015
+n = 5
+
+for i in range(n):    # 使用range會產生0到n-1之數列
+  money *= (1+rate)
+  print('%d: %d' % (i+1, int(money)))
+
+```
+
+```{python}
+
+n = 10
+
+for i in range(n):
+  print('*', end='')    # 不換行
+
+print('')
+
+for i in range(0, n):
+  print('*', end='')
+
+```
+
+```{python}
+
+a = int(input('integer: '))
+print(range(a+1))
+print(list(range(a+1)))    # 將range內容轉換成list，使易於理解
+
+```
+
+```{python}
+
+a = int(input('integer: '))
+total = 0
+for i in range(a+1):
+  total += i
+
+print(total)
+
+```
+
+```{python}
+
+disease_name = ['a', 'b', 'c']
+disease_count = ['63', '47', '155']
+aaa = ['each day', 'each day', 'each month']
+
+for i, j, k in zip(disease_name, disease_count, aaa): 
+  print(i, j, k)
+
+```
+
+# for迴圈：break指令
+
+```{python}
+
+
+
+```
 
 
 
