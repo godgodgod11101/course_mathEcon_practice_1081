@@ -306,14 +306,186 @@ for i, j, k in zip(disease_name, disease_count, aaa):
 
 ```
 
+
+
+# 20210330
+
 # for迴圈：break指令
 
 ```{python}
 
+scores = [94, 82, 60, 91, 88, 79, 61, 93, 99, 71]
+scores.sort(reverse = True)
+
+count = 0
+for i in scores:
+  print(i, end=' ')    # 下個print會空一格
+  count += 1
+  if count == 5: 
+    break    # 離開迴圈
+
+```
+
+# for迴圈：continue指令
+
+```{python}
+
+scores = [94, 82, 60, 91, 88, 79, 61, 93, 99, 71]
+
+count = 0
+for i in scores:
+  if i<90: 
+    continue
+  count += 1
+
+print("%d grades above 90: %d" % (count))
 
 
 ```
 
+jup
+
+# dictionary
+
+```{python}
+
+fruits = ('apple', 'banana')
+fruits[1] = 'apple'
+
+```
+
+```{python}
+
+fruits = {'apple': 15, 'banana': 25, 'orange': 100}
+noodles = {'beef': 100, 'pork': 80, 'pure': 45}
+type(fruits)
+
+# print('price per ... of banana: ', fruits['banana'])
+
+fruits['papaya'] = 30    # 新增字典元素
+print(fruits)
+
+fruits['papaya'] = 35    # 修改字典元素
+print(fruits)
+
+```
+
+```{python}
+fruits_1 = {0: 'apple', 1: 'banana', 2: 'orange'}
+```
+
+```{python}
+
+fruits = {'apple': 15, 'banana': 25, 'orange': 100}
+del fruits['orange']    # 刪除1個字典元素
+print(fruits)
+
+fruits = {'apple': 15, 'banana': 25, 'orange': 100}
+fruits.clear()    # 刪除全部字典元素
+print(fruits)
+
+```
+
+```{python}
+
+fruits = {'apple': 15, 'banana': 25, 'orange': 100}
+fruits_1 = fruits.copy()
+
+```
+
+```{python}
+
+fruits = {'apple': 15, 'banana': 25, 'orange': 100}
+print('dictionary length: %d' % len(fruits))
+
+```
+
+jup
+
+```{python}
+
+fruits = {'apple': 15, 'banana': 25, 'orange': 100}
+for k, v in fruits.items():    # 利用items()可快速取得字典key和value
+  print(k, v, sep=': ')
+
+for k, _ in fruits.items():    # 利用'_'、'__'...命名不重要物件
+  print(k[0], _, sep=': ')
+
+```
+
+```{python}
+
+sports = {
+  'Curry': ['basketball', 'baseball'], 
+  'Durant': ['basketball', 'football', 'soccer'], 
+  'James': ['basketball', 'tennis', 'baminton', 'table tennis']
+}
+
+for name, fav_sport in sports.items():
+  print('%s likes to play' % name)
+  for sport in fav_sport:
+    print(sport)
+
+```
+
+```{python}
+
+print(len(sports['James']))    # 找出對應key有幾個value
+
+```
+
+```{python}
+
+fruits = {'apple': 15, 'banana': 25}
+
+fruits.get('orange')    # 沒東西
+fruits['orange']    # 有錯誤訊息
+
+
+```
+
+```{python}
+
+# 串列轉字典
+
+popular_snack = [['T','12'], ['K','13'], ['S', '16']]
+popular_snack_dict = {}
+
+for i in popular_snack:
+  popular_snack_dict[i[0]] = i[1]
+
+popular_snack_dict
+
+```
+
+```{python}
+
+a = 'abcde'
+
+dict(zip(a, range(0, 5)))
+dict(zip(a, range(10, 20)))
+
+```
+
+# count and set (p.66)
+
+```{python}
+
+ball = ['basketball', 'tennis', 'baminton', 'basketball', 'tennis', 'soccer']
+set(ball)
+
+for i in set(ball): 
+  print(i)
+
+[{i: ball.count(i)} for i in set(ball)]
+
+```
+
+```{python}
+
+type({'class': 4})
+
+```
 
 
 
