@@ -1,0 +1,46 @@
+---
+title: "py class test"
+author: "jacky wang"
+date: "2021/4/9"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+
+# 設定要使用的python（可能因要使用不同版本的python而路徑有所改變）
+use_python("C:\\Users\\User\\anaconda3\\envs\\pyClassEnv_ntpu\\python.exe", required = T)
+# 在名為classEnvironment的沙盒下寫python
+use_condaenv("pyClassEnv_ntpu", required = T)
+```
+
+
+
+
+
+```{python}
+
+list1 = [190,76,45,93,29,59,10,2,55,99,201,86,54,21,22,43,14,89,28,49]
+
+odd = []
+even = []
+
+for i in range(len(list1)):
+  if list1[i] % 2 == 0: 
+    even.append(list1[i])
+  else: 
+    odd.append(list1[i])
+
+odd.sort()
+even.sort()
+
+print(odd, "有 %d 個元素" % (len(odd)))
+print(even, "有 %d 個元素" % (len(even)))
+
+```
+
+
+
+
